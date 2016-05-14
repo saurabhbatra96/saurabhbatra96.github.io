@@ -33,4 +33,12 @@ I remember the first patch I made was a patch which _fixed_ the comments for a c
 
 <img src="/public/opentoopen/opentoopen1.png" style="width: 100%; display: block;">
 
-The beauty of starting with patches such as these is that **a)** you get used to the preferred coding style of your organization, and **b)** you get to explore various classes/modules and their functionalities. The added incentive being, you're improving your organization's documentation and protecting it from grammatical errors. :wink:
+The beauty of starting with patches such as these is that:
+
+**a)** you get used to the preferred coding style of your organization, and
+
+**b)** you get to explore various classes/modules and their functionalities.
+
+The added incentive being, you're improving your organization's documentation and protecting it from grammatical errors. :wink:
+
+Head over to [part 2](/2016/05/14/opening-up-to-open-source-part-2/) for **writing your first _real_ patch**.
