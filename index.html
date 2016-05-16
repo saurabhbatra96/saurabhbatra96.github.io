@@ -24,7 +24,9 @@ title: Home
 
     <hr>
 
-    {{ post.content }}
+    {{ post.excerpt }}
+
+    <a href="{{ post.url }}"><b>Read more...</b></a>
   </div>
   {% endfor %}
 </div>

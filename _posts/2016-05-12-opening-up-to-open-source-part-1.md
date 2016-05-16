@@ -19,6 +19,8 @@ tags: open-source civicrm git github
 
 The toughest part of contributing to open source projects is getting the ball rolling; it's not easy for a newbie to build software from source and to get accustomed to large and abstracted codebases that accompany.
 
+<!--more-->
+
 I remember how excited I was when I first downloaded the source code for Mozilla Firefox and also how frustrated I was after a couple of hours when I couldn't even figure out where the code for a simple menu was located (yes I was naive and grepping for stuff was a foreign concept *sigh*).
 
 <div class="message">My point being, it's only natural that instead of sprinting, you start your journey stumbling.</div>

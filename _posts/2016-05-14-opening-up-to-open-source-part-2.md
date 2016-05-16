@@ -16,6 +16,8 @@ One way to go about finding a bug to fix is to prowl their bug trackers, search 
 
 Instead I'd recommend that you ask your mentor to assign you an issue and provide you with a brief summary of how to go about fixing it.
 
+<!--more-->
+
 ### What Next?
 
 Okay, I'll assume you've found a nice issue for yourself. I myself found a rather simple one for this tutorial:
