@@ -27,8 +27,12 @@ I remember how excited I was when I first downloaded the source code for Mozilla
 
 Once you've found an organization that catches your interest, start off with joining their **mailing lists and IRC channel**. However, I've noticed that people (including me) have this tendency to try and not make a fool out of themselves on public fora and therefore just prowl IRC rather than ask newbie stuff on it. Moreover, it's rather not uncommon for people to get replies some 12 hours after they initially posted their question because of timezone differences and not a lot of people stick around for that long.
 
-<div class="message">The most important piece of advice I have is that you find someone from the "core" team of the organization to email personally.</div>
+<div class="message">The most important piece of advice I have is that you find a mentor associated with the organization to email personally.</div>
 **I cannot stress on this point enough.** You need someone to hold your hand in this initial phase. If you have any doubt on how to build the software, how to deal with an issue/bug, how to rebase the 2945 commits you accidentally inherited when you forgot to change your branch before making the <abbr title="Pull Request on GitHub">PR</abbr>, you email your mentor. If you're lucky and the people running the organization are helpful, your life will be made extremely easy.
+
+<div class="message"><b>However</b>, while you may ask for their help from time to time, the most important aspect of this phase is to try to do everything yourself first.</div>
+
+Google stuff, go through the organization Wikis, read their blogs and forums. **Initiative** is the key here. Your mentor will only assist if he/she finds your work and willingness to work to be up to his/her expectations.
 
 ## Exploring the Code-base
 

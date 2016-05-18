@@ -70,4 +70,4 @@ On your GitHub dashboard, you'll find a notification telling you that you pushed
 
 Congratulations! You have your first PR ready to be merged (or closed)! :grin:
 
-How to make changes to your PRs, what is stashing, rebasing and the wonderful utility called grep. Continued in part 3.
+How to make changes to your PRs, what is testing, rebasing and the wonderful utility called grep. Continued in part 3.
