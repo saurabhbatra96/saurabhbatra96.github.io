@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Opening up to Open Source - Part 1
-tags: open-source civicrm git github
+tags: open-source civicrm git github gsoc
 ---
 
 ### What this series of blogs is about:
