@@ -5,7 +5,7 @@ title: About
 
 ## Saurabh Batra
 
-I'm a third year undergraduate student at <a href="http://www.iitg.ernet.in" target="_blank">IIT Guwahati</a>, studying to be a computer science engineer (*read: pro-Googler*). For a full list of projects, you can view my CV <a href="https://drive.google.com/open?id=0B_mOXYxtAlAVZlY0c2FabV9PODg" target="_blank">here</a> or (better) visit my <a href="https://github.com/saurabhbatra96" target="_blank">GitHub</a>.
+I'm a third year undergraduate student at <a href="http://www.iitg.ernet.in" target="_blank">IIT Guwahati</a>, studying to be a computer science engineer (*read: pro-Googler*). For a full list of projects, you can view my CV <a href="/public/cv.pdf" target="_blank">here</a> or visit my <a href="https://github.com/saurabhbatra96" target="_blank">GitHub</a>.
 
 I'm a big time guitar and ukulele <a href="https://en.wikipedia.org/wiki/Fingerstyle_guitar" target="_blank">fingerstyle fanatic</a> and love to play basketball on the side.
 
