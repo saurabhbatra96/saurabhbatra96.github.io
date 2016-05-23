@@ -4,7 +4,7 @@ title: Sublime Text vs GitHub's Atom
 tags: text-editors sublime-text atom github
 ---
 
-If `vim` is too basic for you but IDEs feel too slow and sluggish, chances are you probably have been using Sublime Text as your preferred text editor. Now the folks at GitHub have an open source editor in town called `Atom` which might give competition to our beloved Sublime.
+If `vim` is too basic for you but IDEs feel too slow and sluggish, chances are you probably have been using Sublime Text as your preferred text editor. Now GitHub has an open source editor in town called `Atom` which might give competition to our beloved Sublime.
 
 I took it out for a spin and used it as my default editor for a week and the following is my honest review of whether I think Atom can stand up to or even overcome the legacy <abbr title="Sublime Text">ST</abbr> has built for itself over the years.
 
