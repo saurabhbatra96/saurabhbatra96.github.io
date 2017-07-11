@@ -44,7 +44,7 @@ To compare, here's the performance statistics for a greedy bot (places blocks su
 
 Comparable to the random bot, which kind of tells that greed might not be that good after all.
 
-However, moving to a more intuitive strategy: minimize average height of columns at every step, drastically improves these statistics:
+Moving to a more intuitive strategy: minimize average height of columns at every step, drastically improves these statistics:
 
 {% highlight json %}
     "Average score" : 726
@@ -81,11 +81,11 @@ When you think of AI, machine learning is a phrase that automatically pops up in
 
 We achieved a perfectly average (it's tough being average at Tetris, believe me, I tried) bot without using a byte of data to tune our bot.
 
-However, it is tough to judge according which objective functions (rules) does the bot play better. Awarding line clears may seem intuitive to you, but maybe the bot is already doing that by rewarding minimum aggregate height!
+However, it is tough to judge according to what objective functions (rules) does the bot play better. Awarding line clears may seem intuitive to you, but maybe the bot is already doing that by rewarding minimum aggregate height!
 
 Suppose we came up with an objective function of our own:
 {% highlight python %}
-f (aggrHeight, numLineClears, numHoles) =
+f(aggrHeight, numLineClears, numHoles) =
   -heightMult*(aggrHeight) + lineMult*(numLineClears) - holeMult(numHoles)
 {% endhighlight %}
 
@@ -97,23 +97,27 @@ Now our goal is to find optimum values for the coefficients so that the bot perf
 
 The paradigm I chose to optimize my objective function is a little something called genetic programming. It behaves a lot like evolution, hence the name.
 
-Let's call a triplet of values (heightMult, lineMult, holeMult) a *chromosome*. Now, we start with 16 such chromosomes filled with random values between -10.0 to 10.0.
+Let's call a triplet of values `(heightMult, lineMult, holeMult)` a *chromosome*.
 
-We randomly select two chromosomes (triplets) and then make them compete in, say, a 100 games of Tetris. The one that performs better is kept while the loser is kept in a separate pile.
+* We start with 16 such chromosomes filled with random values between -10.0 to 10.0.
 
-After all such competitions, half of the losers are randomly discarded.
+* We randomly select two chromosomes (triplets) and then make them compete in, say, a 100 games of Tetris. The one that performs better is kept while the loser is kept in a separate pile.
 
-Now, using the 8 winners that we have with us, we make 4 pairs and ahem, ahem... breed them together. During the breeding process we randomly (with 50-50 odds) select an attribute of a parent and select to keep it over the other parent's attribute, thus giving us 4 new hybrid chromosomes.
+* After all such competitions, half of the losers are randomly discarded.
 
-Now we have our second generation of chromosomes with us (8 winners, 4 losers, 4 hybrids).
+* Using the 8 winners that we have with us, we make 4 pairs and ahem, ahem... breed them together. During the breeding process we randomly (with 50-50 odds) select an attribute of one of the parents and keep it over the other parent's attribute, thus giving us 4 new hybrid chromosomes.
 
-We make them compete again and again till the competing chromosomes start achieving better average scores than we want. Then, we just select one lucky chromosome (just kidding, we select the best chromosome) to use for our bot!
+* We have our second generation of chromosomes with us (8 winners, 4 losers, 4 hybrids).
+
+* We make them compete again and again till the competing chromosomes start achieving better average scores than we want.
+
+* Then, we just select one lucky chromosome (just kidding, we select the best chromosome) to use for our bot!
 
 <div class="message">This was a rather simplistic explanation of genetic programming, you can do a lot more with it, just Google it!</div>
 
 ## Testing Out The Lucky Chromosome
 
-So how does the ML backed bot perform? I don't know because I never ever got around to completing it.
+So how does the ML backed bot perform? Well, I don't know because I never ever got around to completing it.
 
 I did write the boilerplate code for it but never got around to completing it. However, looking at the bright side of things, this does present an opportunity in case anyone wants to take up an introductory ML project (read: somebody please complete my code for me, I don't have the time).
 
@@ -127,7 +131,7 @@ Or if you want to play around with it, just get it from the Go package manager.
 $ go get github.com/saurabhbatra96/nextgen-tetris
 {% endhighlight %}
 
-Open your bin folder and run the `nextgen-tetris` binary with custom args: height multiplier, line multiplier and hole mutiplier.
+Open your bin folder and run the `nextgen-tetris` binary with custom args: *height multiplier*, *line multiplier* and *hole mutiplier*.
 
 {% highlight bash %}
 $ ./nextgen-tetris -1.0 5.0 -2.5
@@ -135,6 +139,6 @@ $ ./nextgen-tetris -1.0 5.0 -2.5
 
 Go through the `genetic-prog` directory to have a look at the boilerplate for the genetic algorithm.
 
-The `tetris-data` directory has the statistics I stated above and the corresponding binaries that I used to compute the same. You can run them for yourself and corroborate the results.
+The `tetris-data` directory has the statistics I stated above and the corresponding binaries that I used to compute the same. You can run them for yourself and corroborate my results.
 
 <img src="/public/machinelearning/mleverywhere.jpg" style="width:100%;display: block;">
