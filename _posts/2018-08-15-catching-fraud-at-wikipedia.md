@@ -9,27 +9,27 @@ tags: wikimedia-foundation wikipedia fundraising fraud-detection machine-learnin
 ## Donations and fraud at WMF
 Thanks to donors all over the globe supporting Wikipedia and her sister sites, the Wikimedia Foundation receives millions of donations in any given year. In the fiscal year 2016-17 WMF raised <a href="https://foundation.wikimedia.org/wiki/2016-2017_Fundraising_Report" target="_blank">$91 million from over 6.1 million donations</a>! Unfortunately the donations were not bereft of fraudulent transactions - transactions either made using stolen credit card details or made explicitly with the intent to harm WMF by causing monetary loss in the form of chargeback fees.
 
-Frauds are usually anamolies when it comes to donations, but even assuming that frauds form only 1% of all transactions - that is still 61,000 transactions in the year 16-17. Taking into account that usually chargeback fees range from <a href="https://www.paypal.com/us/webapps/mpp/merchant-fees#chargeback-fees" target="_blank">$15-$20</a> across various payment gateways, chargeback payments alone would cost WMF $1,220,000!
+Frauds are usually anomalies when it comes to donations, but even assuming that frauds form only 1% of all transactions - that is still 61,000 transactions in the year 16-17. Taking into account that usually chargeback fees range from <a href="https://www.paypal.com/us/webapps/mpp/merchant-fees#chargeback-fees" target="_blank">$15-$20</a> across various payment gateways, chargeback payments alone would cost WMF $1,220,000!
 
 ## Fraud detection workflow
-WMF Fundraising pro-actively works to make sure that fraudulent transactions are detected before they can be "successful". The current workflow looks something like this - 
+WMF Fundraising proactively works to make sure that fraudulent transactions are detected before they can be "successful". The current workflow looks something like this - 
 
 <img src="/public/wmf-fd/fd-workflow.png" style="display: block; width: 100%;">
 <!--more-->
 
-While this approach worked just fine for a few years, statistics show that the performance of filters and Minfraud has continuosly degraded over the years - with a lot of heavy lifting being done by donor services instead. Not only does this cost WMF money in the form of merchant refund fee but it also costs us in terms of man-hours spent looking at these transactions.
+While this approach worked just fine for a few years, statistics show that the performance of filters and Minfraud has continuously degraded over the years - with a lot of heavy lifting being done by donor services instead. Not only does this cost WMF money in the form of merchant refund fee but it also costs us in terms of man-hours spent looking at these transactions.
 
 ## Research
-In order to improve WMF's automatic fraud-detection rates, we started experimenting with machine learning techniques for anamoly detection. After a few weeks of experiments, we decided to go forward and use ensemble techniques like <a href="https://en.wikipedia.org/wiki/Random_forest" target="_blank">random forests</a> and <a href="https://en.wikipedia.org/wiki/Gradient_boosting" target="_blank">gradient boosting</a> to classify our transactions as fraud/genuine.
+In order to improve WMF's automatic fraud-detection rates, we started experimenting with machine learning techniques for anomaly detection. After a few weeks of experiments, we decided to go forward and use ensemble techniques like <a href="https://en.wikipedia.org/wiki/Random_forest" target="_blank">random forests</a> and <a href="https://en.wikipedia.org/wiki/Gradient_boosting" target="_blank">gradient boosting</a> to classify our transactions as fraud/genuine.
 
-Both of these techniques involve the use of <a href="https://en.wikipedia.org/wiki/Decision_tree" target="_blank">decision trees</a>. Decision trees are very easy to visualize and intuitive to understand. Our classifiers make use of an ensemble of them - that is, the outputs of a bunch of decision trees is taken into account when making a final decision on how to classify our input. 
+Both of these techniques involve the use of <a href="https://en.wikipedia.org/wiki/Decision_tree" target="_blank">decision trees</a>. Decision trees are very easy to visualize and intuitive to understand. Our classifiers make use of an ensemble of them - that is, several such trees are learned by our model by going through the data and the outputs of these are taken into account when making a final decision on how to classify the input. 
 
 <div style="width: 90%; font-size: 80%; text-align: center;"><img style="width: 70%; padding-bottom: 0.5em;" src="/public/wmf-fd/d-tree.png"><br>A decision tree for my plans this weekend.</div>
 
 <br>
 Our metrics for measuring model performance were twofold - **precision** and **recall**.
 
-Precision in our case refers to "out of all the predictions made by the model, what percentage were actually fraudulent". Recall refers to "out of all the fraudulent transactions, what percentage were correctly captured by our model". Concentrating on only on is not enough, a healthy mixture of both is required. For example a model which just checks whether the name field is empty in a donation may be remarkably precise but will not cover a large spectrum of fraudulent transactions.
+Precision in our case refers to "out of all the predictions made by the model, what percentage were actually fraudulent". Recall refers to "out of all the fraudulent transactions, what percentage were correctly captured by our model". Concentrating on only one is not enough, a healthy mixture of both is required. For example a model which just checks whether the name field is empty in a donation may be remarkably precise but will not cover a large spectrum of fraudulent transactions.
 
 Precision and recall can be easily calculated by first calculating the following -
 
@@ -69,6 +69,8 @@ This process is to be replaced by a pipeline which automates all these steps, ho
 
 ## Future work
 We are far from finished on this! Not only are we chasing better classifier performance and a fluider architecture; we started off with the lofty goal of making a high-quality, truly open-source credit-card fraud detection system and we intend to make it happen.
+
+While the indecipherability of the decision making process of machine learning models is considered a con, here it helps in obfuscating the same process from fraudsters - even though they might have the code readily available!
 
 Currently, we have 3 major tasks on our plate - 
 1. Integrate with WMF transaction workflow. Seeing how our model performs on new data would help us make sure that our approach is "correct" and it works.
