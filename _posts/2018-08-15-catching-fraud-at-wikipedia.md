@@ -63,7 +63,7 @@ However, the problem of generating and re-generating the classifier for the API 
 3. Run another python script which trains our model.
 4. Copy-paste the model into the API folder which uses this as a backend to service its requests.
 
-All of the above steps are well-documented and are verifiably reproducable using code snippets as detailed in <a href="https://github.com/saurabhbatra96/wmf-fraud-pipeline/#wmf-fraud-pipeline" target="_blank">this repo</a> I'm maintaining.
+All of the above steps are well-documented and are verifiably reproducable using code snippets as detailed in <a href="https://github.com/saurabhbatra96/wmf-fraud-pipeline/#wmf-fraud-pipeline" target="_blank">this repo</a>.
 
 This process is to be replaced by a pipeline which automates all these steps, hopefully limiting the need of manual intervention.
 
