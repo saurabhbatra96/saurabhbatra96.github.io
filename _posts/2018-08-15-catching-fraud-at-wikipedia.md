@@ -41,7 +41,7 @@ Using these, precision and recall come out to be: `Precision = TP / (TP + FP)` a
 
 Ideally we want the values of precision and recall both to be as high as possible, however that is not always possible as an increase in one usually means a decrease in the other. We were able to capture the precision-recall tradeoffs and plot the following curve.
 
-<img src="/public/wmf-fd/gb-default.png" style="display: block; width: 100%;">
+<img src="/public/wmf-fd/gb-tuned.png" style="display: block; width: 100%;">
 <a name="results-and-comparisions"></a>
 ## Results and comparisions
 In a comparision of our classifier v/s the filters - we observed that statistically our classifier could've caused recall to increase about 50 points in the fiscal year 2017-2018 while maintaining the same 90%+ precision. A whopping 142% increase in the amount of fraud caught before a transaction is marked as complete, all the while maintaining the same percentage of false positives.
