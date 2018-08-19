@@ -39,6 +39,8 @@ Precision and recall can be easily calculated by first calculating the following
 
 Using these, precision and recall come out to be: `Precision = TP / (TP + FP)` and `Recall = TP / (TP + FN)`.
 
+<a href="https://commons.wikimedia.org/wiki/File:Precisionrecall.svg#/media/File:Precisionrecall.svg" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Precisionrecall.svg/1200px-Precisionrecall.svg.png" alt="Precisionrecall.svg" style="display: block; width: 70%;"></a>
+
 Ideally we want the values of precision and recall both to be as high as possible, however that is not always possible as an increase in one usually means a decrease in the other. We were able to capture the precision-recall tradeoffs and plot the following curve.
 
 <img src="/public/wmf-fd/gb-tuned.png" style="display: block; width: 100%;">
