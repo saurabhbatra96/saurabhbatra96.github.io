@@ -152,6 +152,59 @@
 					<input class="input100" type="text" name="w" id="w" placeholder="Press btn to calculate" disabled>
 				</div>
 
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Mercury lamp Wattage Required</span>
+					<input class="input100" type="text" name="whg" id="whg" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 input100-select bg1">
+					<span class="label-input100">Hg Lamp Select</span>
+					<div>
+						<select class="js-select2" name="lampw" id="lampw">
+							<option>Lamp: Wattage</option>
+							<option value="10">Philips TUV T8 : 10W</option>
+							<option value="15">Philips TUV T8 : 15W</option>
+							<option value="25">Philips TUV T8 : 25W</option>
+							<option value="30">Philips TUV T8 : 30W</option>
+							<option value="36">Philips TUV T8 : 36W</option>
+						</select>
+						<div class="dropDownSelect2"></div>
+					</div>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Number of HG lamps</span>
+					<input class="input100" type="text" name="hgno" id="hgno" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">UV Extinction Coeff due to abs and scattering</span>
+					<input class="input100" type="text" name="uvexc" id="uvexc" placeholder="">
+				</div>
+
+				<div class="wrap-input100 input100-select bg1">
+					<span class="label-input100">Reflectance of shade</span>
+					<div>
+						<select class="js-select2" name="refl" id="refl">
+							<option>Material: Reflectance</option>
+							<option value="0.6">Aluminium untreated : 0.6</option>
+							<option value="0.89">Aluminium treated : 0.89</option>
+							<option value="0.85">Aluminium sputtered on glass : 0.85</option>
+							<option value="0.75">ALZAK : 0.75</option>
+							<option value="0.16">Duralumin : 0.16</option>
+							<option value="0.16">Duralumin : 0.16</option>
+							<option value="0.3">Stainless steel/Tin plate : 0.3</option>
+							<option value="0.39">Chromium plating : 0.39</option>
+						</select>
+						<div class="dropDownSelect2"></div>
+					</div>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Fraction of total light reflected</span>
+					<input class="input100" type="text" name="ftlr" id="ftlr" placeholder="">
+				</div>
+
 				<div class="rs1-wrap-input100">
 					<button class="contact100-form-btn" onclick="calcEef();return false;">Calculate all values</button>
 				</div>
