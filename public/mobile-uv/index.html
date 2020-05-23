@@ -40,17 +40,17 @@
 				</span>
 
 				<div class="wrap-input100 bg1">
-					<span class="label-input100">Area for purification</span>
-					<input class="input100" type="text" name="area" id="area" placeholder="in m2">
+					<span class="label-input100">Area for purification (in m<sup>2</sup>)</span>
+					<input class="input100" type="text" name="area" id="area" placeholder="Area">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">UV Wavelength</span>
-					<input class="input100" type="text" name="wavelen" placeholder="in nm ">
+					<span class="label-input100">UV Wavelength (in nm)</span>
+					<input class="input100" type="text" name="wavelen" placeholder="Wavelength">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Survival of organism</span>
+					<span class="label-input100">Survival of organism (N<sub>t</sub>/N<sub>0</sub>)</span>
 					<input class="input100" type="text" name="survival" id="survival" placeholder="Nt/No">
 				</div>
 
@@ -128,8 +128,8 @@
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Time of exposure</span>
-					<input class="input100" type="text" name="t" id="t" placeholder="in s">
+					<span class="label-input100">Time of exposure (in s)</span>
+					<input class="input100" type="text" name="t" id="t" placeholder="Time">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
@@ -162,18 +162,18 @@
 					<div>
 						<select class="js-select2" name="lampw" id="lampw">
 							<option>Lamp: Wattage</option>
-							<option value="10">Philips TUV T8 : 10W</option>
-							<option value="15">Philips TUV T8 : 15W</option>
-							<option value="25">Philips TUV T8 : 25W</option>
-							<option value="30">Philips TUV T8 : 30W</option>
-							<option value="36">Philips TUV T8 : 36W</option>
+							<option value='{"w":"10","irr":"0.23"}'>Philips TUV T8 : 10W</option>
+							<option value='{"w":"15","irr":"0.48"}'>Philips TUV T8 : 15W</option>
+							<option value='{"w":"25","irr":"0.7"}'>Philips TUV T8 : 25W</option>
+							<option value='{"w":"30","irr":"1"}'>Philips TUV T8 : 30W</option>
+							<option value='{"w":"36","irr":"1.45"}'>Philips TUV T8 : 36W</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Number of HG lamps</span>
+					<span class="label-input100">Number of HG lamps required (without factoring scattering and reflection)</span>
 					<input class="input100" type="text" name="hgno" id="hgno" placeholder="Press btn to calculate" disabled>
 				</div>
 
@@ -235,8 +235,33 @@
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Modified Number of Hg Lamps *</span>
+					<span class="label-input100">Modified Number of Hg Lamps required *</span>
 					<input class="input100" type="text" name="hgnomod" id="hgnomod" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Distance of surface from source (in m)</span>
+					<input class="input100" type="text" name="h" id="h" placeholder="">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Angle of reflector (in degrees)</span>
+					<input class="input100" type="text" name="theta" id="theta" placeholder="">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Irrediance at surface</span>
+					<input class="input100" type="text" name="irrh" id="irrh" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Spread area at given distance</span>
+					<input class="input100" type="text" name="spread" id="spread" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Expected Nt/N0 using given no. of bulbs</span>
+					<input class="input100" type="text" name="calcntno" id="calcntno" placeholder="Press btn to calculate" disabled>
 				</div>
 
 				<div class="rs1-wrap-input100">
