@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Mobile UV Purification System</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/noui/nouislider.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+
+
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form" method="POST">
+				<span class="contact100-form-title">
+					Vehicular Cabin Air Purification
+				</span>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Air flow rate (in cfm)</span>
+					<input class="input100" type="text" id="airflow">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Noise level (in db)</span>
+					<input class="input100" type="text" id="noiselevel">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Cabin volume (in ft<sup>3</sup>)</span>
+					<input class="input100" type="text" id="cabinvolume">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Ceiling height (in ft)</span>
+					<input class="input100" type="text" id="ceilingheight">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Area of cleaning (in ft<sup>2</sup>)</span>
+					<input class="input100" type="text" id="areacleaning" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Occupant density (in ft<sup>2</sup>/person)</span>
+					<input class="input100" type="text" id="occdensity">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Filter assembly area (in ft<sup>2</sup>)</span>
+					<input class="input100" type="text" id="filterarea">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Air velocity through filter assembly (in ft/min)</span>
+					<input class="input100" type="text" id="airvelocity">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Air change rate</span>
+					<input class="input100" type="text" id="ach" placeholder="Press btn to calculate"  disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Clean air discharge rate (in cfm)</span>
+					<input class="input100" type="text" id="cleanairdrate" placeholder="Press btn to calculate"  disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Ventilation per person</span>
+					<input class="input100" type="text" id="venpp" placeholder="Press btn to calculate"  disabled>
+				</div>
+
+				<p>ACH meets the requirements for </p>
+
+				
+
+				<!-- <div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">UV Wavelength (in nm)</span>
+					<input class="input100" type="text" name="wavelen" placeholder="Wavelength">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Survival of organism (N<sub>t</sub>/N<sub>0</sub>)</span>
+					<input class="input100" type="text" name="survival" id="survival" placeholder="Nt/No">
+				</div>
+
+				<div class="wrap-input100 input100-select bg1">
+					<span class="label-input100">Rate constant k</span>
+					<div>
+						<select class="js-select2" name="k" id="k">
+							<option>Microorganism: Dose</option> 
+							<option value="0.051">Bacillus antrhracis: 45.2</option>
+							<option value="0.060">Bakers' yeast: 39</option>
+							<option value="0.084">B.megatherium sp.(spores): 27.3</option>
+							<option value="0.070">Brewers' yeast: 33</option>
+							<option value="0.178">B. megaterium sp. (veg.): 13.0</option>
+							<option value="0.038">Common yeast cake: 60</option>
+							<option value="0.072">B.parathyphosus: 32.0</option>
+							<option value="0.032">B. suptilis: 71.0</option>
+							<option value="0.038">Saccharomyces ellipsoideus: 60</option>
+							<option value="0.019">B. suptilis spores: 120.0</option>
+							<option value="0.029">Saccharomyces sp.: 80</option>
+							<option value="0.209">Campylobacter jejuni: 11.0</option>
+							<option value="0.019">Clostridium tetani: 120.0</option>
+							<option value="0.069">Corynebacterium diphteriae: 33.7</option>
+							<option value="0.105">Dysentery bacilli: 22.0</option>
+							<option value="0.108">Eberthella typhosa: 21.4</option>
+							<option value="0.003">Aspergillus flavus: 600</option>
+							<option value="0.077">Escherichia coli: 30.0</option>
+							<option value="0.004">Aspergillus glaucus: 440</option>
+							<option value="0.089">Klebsiella terrifani: 26.0</option>
+							<option value="0.0014">Aspergillus niger: 1320</option>
+							<option value="0.256">Legionella pneumophila: 9.0</option>
+							<option value="0.013">Mucor racemosus A: 170</option>
+							<option value="0.038">Micrococcus candidus: 60.0</option>
+							<option value="0.013">Mucor racemosus B: 170</option>
+							<option value="0.023">Micrococcus sphaeroides: 100.0</option>
+							<option value="0.046">Oospora lactis: 50</option>
+							<option value="0.038">Mycobacterium tuberculosis: 60.0</option>
+							<option value="0.004">Penicillium digitatum: 440</option>
+							<option value="0.053">Neisseria catarralis: 44.0</option>
+							<option value="0.018">Penicillium expansum: 130</option>
+							<option value="0.053">Phytomonas tumefaciens: 44.0</option>
+							<option value="0.018">Pencillium rogueforti: 130</option>
+							<option value="0.042">Pseudomonas aeruginosa: 55.0</option>
+							<option value="0.002">Rhizopus nigricans: 1110</option>
+							<option value="0.065">Pseudomans fluorescens: 35.0</option>
+							<option value="0.086">Proteaus vulgaris: 26.4</option>
+							<option value="0.058">Salmonella enteritidis: 40.0</option>
+							<option value="0.072">Salmonella paratyphi: 32.0</option>
+							<option value="0.032">Hepatits A: 73</option>
+							<option value="0.029">Salmonella typhimurium: 80.0</option>
+							<option value="0.064">Influenza virus: 36</option>
+							<option value="0.012">Sarcina lutea: 197.0</option>
+							<option value="0.012">MS-2 Coliphase: 186</option>
+							<option value="0.095">Seratia marcescens: 24.2</option>
+							<option value="0.040">Polio virus: 58</option>
+							<option value="0.141">Shigella paradysenteriae: 16.3</option>
+							<option value="0.028">Rotavirus: 81</option>
+							<option value="0.077">Shigella sonnei: 30.0</option>
+							<option value="0.053">Spirillum rubrum: 44.0</option>
+							<option value="0.126">Staphylococcus albus: 18.4</option>
+							<option value="0.086">Staphylococcus aureus: 26.0</option>
+							<option value="0.052">Streptococcus faecalis: 44.0</option>
+							<option value="0.092">Cryptosporidium parvum: 25</option>
+							<option value="0.106">Streptococcus hemoluticus: 216.0</option>
+							<option value="0.209">Giardia lamblia: 11</option>
+							<option value="0.037">Streptococcus lactus: 61.5</option>
+							<option value="0.115">Streptococcus viridans: 20.0</option>
+							<option value="0.057">Sentertidis: 40.0</option>
+							<option value="0.066">Vibrio chlolerae (V.comma): 35.0</option>
+							<option value="0.0008">Blue Green: 3000</option>
+							<option value="0.209">Yersinia enterocolitica: 11.0</option>
+							<option value="0.019">Chlorella vulgaris: 120</option>
+						</select>
+						<div class="dropDownSelect2"></div>
+					</div>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Time of exposure (in s)</span>
+					<input class="input100" type="text" name="t" id="t" placeholder="Time">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">E<sub>eff</sub></span>
+					<input class="input100" type="text" name="eef" id="eef" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">H<sub>eff</sub></span>
+					<input class="input100" type="text" name="hef" id="hef" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Total UV Dose</span>
+					<input class="input100" type="text" name="tw" id="tw" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">UV Wattage Required</span>
+					<input class="input100" type="text" name="w" id="w" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Mercury lamp Wattage Required</span>
+					<input class="input100" type="text" name="whg" id="whg" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 input100-select bg1">
+					<span class="label-input100">Hg Lamp Select</span>
+					<div>
+						<select class="js-select2" name="lampw" id="lampw">
+							<option>Lamp: Wattage</option>
+							<option value='{"w":"10","irr":"0.23"}'>Philips TUV T8 : 10W</option>
+							<option value='{"w":"15","irr":"0.48"}'>Philips TUV T8 : 15W</option>
+							<option value='{"w":"25","irr":"0.7"}'>Philips TUV T8 : 25W</option>
+							<option value='{"w":"30","irr":"1"}'>Philips TUV T8 : 30W</option>
+							<option value='{"w":"36","irr":"1.45"}'>Philips TUV T8 : 36W</option>
+						</select>
+						<div class="dropDownSelect2"></div>
+					</div>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Number of HG lamps required (without factoring scattering and reflection)</span>
+					<input class="input100" type="text" name="hgno" id="hgno" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">UV Extinction Coeff due to abs and scattering</span>
+					<input class="input100" type="text" name="uvexc" id="uvexc" placeholder="">
+				</div>
+
+				<div class="wrap-input100 input100-select bg1">
+					<span class="label-input100">Reflectance of shade</span>
+					<div>
+						<select class="js-select2" name="refl" id="refl">
+							<option>Material: Reflectance</option>
+							<option value="0.6">Aluminium untreated : 0.6</option>
+							<option value="0.89">Aluminium treated : 0.89</option>
+							<option value="0.85">Aluminium sputtered on glass : 0.85</option>
+							<option value="0.75">ALZAK : 0.75</option>
+							<option value="0.16">Duralumin : 0.16</option>
+							<option value="0.16">Duralumin : 0.16</option>
+							<option value="0.3">Stainless steel/Tin plate : 0.3</option>
+							<option value="0.39">Chromium plating : 0.39</option>
+							<option value="0.1">Various white oil paints : 0.1</option>
+							<option value="0.35">Various white water paints : 0.35</option>
+							<option value="0.75">Aluminium paint : 0.75</option>
+							<option value="0.05">Zinc oxide paint : 0.05</option>
+							<option value="0.05">Black enamel : 0.05</option>
+							<option value="0.1">White baked enamel : 0.1</option>
+							<option value="0.6">White plastering : 0.6</option>
+							<option value="0.6">New plaster : 0.6</option>
+							<option value="0.88">Magnesium oxide : 0.88</option>
+							<option value="0.8">Calcium carbonate : 0.8</option>
+							<option value="0.17">Linen : 0.17</option>
+							<option value="0.04">Bleached wool : 0.04</option>
+							<option value="0.3">Bleached cotton : 0.3</option>
+							<option value="0.31">Wallpapers ivory : 0.31</option>
+							<option value="0.31">Wallpapers white : 0.31</option>
+							<option value="0.31">Wallpapers red printed : 0.31</option>
+							<option value="0.26">Wallpapers ivory printed : 0.26</option>
+							<option value="0.18">Wallpapers brown printed : 0.18</option>
+							<option value="0.25">White notepaper : 0.25</option>
+						</select>
+						<div class="dropDownSelect2"></div>
+					</div>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Fraction of total light reflected</span>
+					<input class="input100" type="text" name="ftlr" id="ftlr" placeholder="">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Modified UV Wattage *</span>
+					<input class="input100" type="text" name="wmod" id="wmod" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Modified Hg Lamp Wattage *</span>
+					<input class="input100" type="text" name="whgmod" id="whgmod" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Modified Number of Hg Lamps required *</span>
+					<input class="input100" type="text" name="hgnomod" id="hgnomod" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Distance of surface from source (in m)</span>
+					<input class="input100" type="text" name="h" id="h" placeholder="">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Angle of reflector (in degrees)</span>
+					<input class="input100" type="text" name="theta" id="theta" placeholder="">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Irrediance at surface</span>
+					<input class="input100" type="text" name="irrh" id="irrh" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Spread area at given distance</span>
+					<input class="input100" type="text" name="spread" id="spread" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Expected Nt/N0 using given no. of bulbs</span>
+					<input class="input100" type="text" name="calcntno" id="calcntno" placeholder="Press btn to calculate" disabled>
+				</div> -->
+
+				<div class="rs1-wrap-input100">
+					<button class="contact100-form-btn" onclick="compute();return false;">Calculate all values</button>
+				</div>
+
+				<!--<div class="wrap-contact100-form-radio">
+					<span class="label-input100">What type of products do you sell?</span>
+
+					<div class="contact100-form-radio m-t-15">
+						<input class="input-radio100" id="radio1" type="radio" name="type-product" value="physical" checked="checked">
+						<label class="label-radio100" for="radio1">
+							Phycical Products
+						</label>
+					</div>
+
+					<div class="contact100-form-radio">
+						<input class="input-radio100" id="radio2" type="radio" name="type-product" value="digital">
+						<label class="label-radio100" for="radio2">
+							Digital Products
+						</label>
+					</div>
+
+					<div class="contact100-form-radio">
+						<input class="input-radio100" id="radio3" type="radio" name="type-product" value="service">
+						<label class="label-radio100" for="radio3">
+							Services Consulting
+						</label>
+					</div>
+				</div>
+				<div class="wrap-contact100-form-range">
+					<span class="label-input100">Budget *</span>
+
+					<div class="contact100-form-range-value">
+						$<span id="value-lower">610</span> - $<span id="value-upper">980</span>
+						<input type="text" name="from-value">
+						<input type="text" name="to-value">
+					</div>
+
+					<div class="contact100-form-range-bar">
+						<div id="filter-bar"></div>
+					</div>
+				</div>
+
+				
+
+				<div class="wrap-input100 bg0 rs1-alert-validate" data-validate = "Please Type Your Message">
+					<span class="label-input100">Message</span>
+					<textarea class="input100" name="message" placeholder="Your message here..."></textarea>
+				</div>
+
+				<div class="container-contact100-form-btn">
+					<button class="contact100-form-btn">
+						<span>
+							Submit
+							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>-->
+			</form>
+		</div>
+	</div>
+
+
+
+<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+
+
+			$(".js-select2").each(function(){
+				$(this).on('select2:close', function (e){
+					if($(this).val() == "Please chooses") {
+						$('.js-show-service').slideUp();
+					}
+					else {
+						$('.js-show-service').slideUp();
+						$('.js-show-service').slideDown();
+					}
+				});
+			});
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/noui/nouislider.min.js"></script>
+	<script>
+	    var filterBar = document.getElementById('filter-bar');
+
+	    noUiSlider.create(filterBar, {
+	        start: [ 1500, 3900 ],
+	        connect: true,
+	        range: {
+	            'min': 1500,
+	            'max': 7500
+	        }
+	    });
+
+	    var skipValues = [
+	    document.getElementById('value-lower'),
+	    document.getElementById('value-upper')
+	    ];
+
+	    filterBar.noUiSlider.on('update', function( values, handle ) {
+	        skipValues[handle].innerHTML = Math.round(values[handle]);
+	        $('.contact100-form-range-value input[name="from-value"]').val($('#value-lower').html());
+	        $('.contact100-form-range-value input[name="to-value"]').val($('#value-upper').html());
+	    });
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23581568-13');
+</script>
+
+</body>
+</html>
