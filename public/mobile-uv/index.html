@@ -39,22 +39,98 @@
 					Mobile UV Purification
 				</span>
 
+				<h1>Cabinet Size</h1><br>
+
 				<div class="wrap-input100 bg1">
-					<span class="label-input100">Area for purification (in m<sup>2</sup>)</span>
-					<input class="input100" type="text" name="area" id="area" placeholder="Area">
+					<span class="label-input100">Length of shelf (in m)</span>
+					<input class="input100" type="text" id="length" placeholder="Length">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">UV Wavelength (in nm)</span>
-					<input class="input100" type="text" name="wavelen" placeholder="Wavelength">
+					<span class="label-input100">Width of shelf (in m)</span>
+					<input class="input100" type="text" id="width" placeholder="Width">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Survival of organism (N<sub>t</sub>/N<sub>0</sub>)</span>
-					<input class="input100" type="text" name="survival" id="survival" placeholder="Nt/No">
+					<span class="label-input100">Total height of cabinet (in m)</span>
+					<input class="input100" type="text" id="height" placeholder="Height">
 				</div>
 
-				<div class="wrap-input100 input100-select bg1">
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">No. of shelves</span>
+					<input class="input100" type="text" id="noshelves" placeholder="No. of shelves">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Height of each shelf</span>
+					<input class="input100" type="text" id="heightshelf" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<h1>Coordinates of object</h1><br>
+				<div class="wrap-input100 bg1">
+					<span class="label-input100">X (in m)</span>
+					<input class="input100" type="text" id="X" placeholder="X">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Y (in m)</span>
+					<input class="input100" type="text" id="Y" placeholder="Y">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Z (in m)</span>
+					<input class="input100" type="text" id="Z" placeholder="Z">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Distance of object (a)</span>
+					<input class="input100" type="text" id="A" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Half solid angle of object w.r.t UV light (alpha)</span>
+					<input class="input100" type="text" id="alpha" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<h1>UV Lamp Stats</h1><br>
+
+				<div class="wrap-input100 bg1">
+					<span class="label-input100">UV Lamp Wattage (in W)</span>
+					<input class="input100" type="text" id="wattage" placeholder="Wattage">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Flux</span>
+					<input class="input100" type="text" id="flux" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Length of lamp (in m)</span>
+					<input class="input100" type="text" id="len-lamp" placeholder="Length of lamp">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Irradiance at surface (W/m^2)</span>
+					<input class="input100" type="text" id="irr" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Dose requirment</span>
+					<input class="input100" type="text" id="dose" placeholder="Dose requirment">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Exposure time (in minutes)</span>
+					<input class="input100" type="text" id="exposure-time" placeholder="Press btn to calculate" disabled>
+				</div>
+
+				
+				<div class="wrap-input100 bg1">
+					<button class="contact100-form-btn" onclick="calc();return false;">Calculate all values</button>
+				</div>
+
+
+				<!-- <div class="wrap-input100 input100-select bg1">
 					<span class="label-input100">Rate constant k</span>
 					<div>
 						<select class="js-select2" name="k" id="k">
@@ -125,64 +201,11 @@
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
-				</div>
+				</div> -->
 
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Time of exposure (in s)</span>
-					<input class="input100" type="text" name="t" id="t" placeholder="Time">
-				</div>
+				
 
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">E<sub>eff</sub></span>
-					<input class="input100" type="text" name="eef" id="eef" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">H<sub>eff</sub></span>
-					<input class="input100" type="text" name="hef" id="hef" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Total UV Dose</span>
-					<input class="input100" type="text" name="tw" id="tw" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">UV Wattage Required</span>
-					<input class="input100" type="text" name="w" id="w" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Mercury lamp Wattage Required</span>
-					<input class="input100" type="text" name="whg" id="whg" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 input100-select bg1">
-					<span class="label-input100">Hg Lamp Select</span>
-					<div>
-						<select class="js-select2" name="lampw" id="lampw">
-							<option>Lamp: Wattage</option>
-							<option value='{"w":"10","irr":"0.23"}'>Philips TUV T8 : 10W</option>
-							<option value='{"w":"15","irr":"0.48"}'>Philips TUV T8 : 15W</option>
-							<option value='{"w":"25","irr":"0.7"}'>Philips TUV T8 : 25W</option>
-							<option value='{"w":"30","irr":"1"}'>Philips TUV T8 : 30W</option>
-							<option value='{"w":"36","irr":"1.45"}'>Philips TUV T8 : 36W</option>
-						</select>
-						<div class="dropDownSelect2"></div>
-					</div>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Number of HG lamps required (without factoring scattering and reflection)</span>
-					<input class="input100" type="text" name="hgno" id="hgno" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">UV Extinction Coeff due to abs and scattering</span>
-					<input class="input100" type="text" name="uvexc" id="uvexc" placeholder="">
-				</div>
-
-				<div class="wrap-input100 input100-select bg1">
+				<!-- <div class="wrap-input100 input100-select bg1">
 					<span class="label-input100">Reflectance of shade</span>
 					<div>
 						<select class="js-select2" name="refl" id="refl">
@@ -217,56 +240,7 @@
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Fraction of total light reflected</span>
-					<input class="input100" type="text" name="ftlr" id="ftlr" placeholder="">
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Modified UV Wattage *</span>
-					<input class="input100" type="text" name="wmod" id="wmod" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Modified Hg Lamp Wattage *</span>
-					<input class="input100" type="text" name="whgmod" id="whgmod" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Modified Number of Hg Lamps required *</span>
-					<input class="input100" type="text" name="hgnomod" id="hgnomod" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Distance of surface from source (in m)</span>
-					<input class="input100" type="text" name="h" id="h" placeholder="">
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Angle of reflector (in degrees)</span>
-					<input class="input100" type="text" name="theta" id="theta" placeholder="">
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Irrediance at surface</span>
-					<input class="input100" type="text" name="irrh" id="irrh" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Spread area at given distance</span>
-					<input class="input100" type="text" name="spread" id="spread" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Expected Nt/N0 using given no. of bulbs</span>
-					<input class="input100" type="text" name="calcntno" id="calcntno" placeholder="Press btn to calculate" disabled>
-				</div>
-
-				<div class="rs1-wrap-input100">
-					<button class="contact100-form-btn" onclick="calcEef();return false;">Calculate all values</button>
-				</div>
+				</div> -->
 
 				<!--<div class="wrap-contact100-form-radio">
 					<span class="label-input100">What type of products do you sell?</span>

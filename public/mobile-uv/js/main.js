@@ -44,3 +44,27 @@ function calcEef() {
     document.getElementById("spread").value = spread.toString()+" m^2";
     document.getElementById("calcntno").value = calcntno.toString();
 }
+
+function calc() {
+    let cabinet_ht = parseFloat(document.getElementById("height").value);
+    let no_shelves = parseFloat(document.getElementById("noshelves").value);
+    let x = parseFloat(document.getElementById("X").value);
+    let y = parseFloat(document.getElementById("Y").value);
+    let z = parseFloat(document.getElementById("Z").value);
+    let wattage = parseFloat(document.getElementById("wattage").value);
+    let lamp_len = parseFloat(document.getElementById("len-lamp").value);
+    let dose = parseFloat(document.getElementById("dose").value);
+
+    let height_shelf = cabinet_ht/no_shelves;
+    let a = Math.sqrt(x*x+y*y+z*z);
+    let alpha = 57.2958 * Math.asin(Math.abs(y)/Math.abs(z));
+    let flux = 0.35*wattage;
+    let irr = flux*(2*alpha+Math.sin(2*(alpha/57.2958)))/(2*Math.PI*Math.PI*lamp_len*a)
+
+    document.getElementById("heightshelf").value = height_shelf.toString()+" m";
+    document.getElementById("A").value = a.toString()+" m";
+    document.getElementById("alpha").value = alpha.toString()+" degrees";
+    document.getElementById("flux").value = flux.toString()+" W";
+    document.getElementById("irr").value = irr.toString()+" W/m^2";
+    document.getElementById("exposure-time").value = ((dose/irr)/60)+" minutes";
+}
