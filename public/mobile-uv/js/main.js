@@ -57,7 +57,7 @@ function calc() {
 
     let height_shelf = cabinet_ht/no_shelves;
     let a = Math.sqrt(x*x+y*y+z*z);
-    let alpha = 57.2958 * Math.asin(Math.abs(y)/Math.abs(z));
+    let alpha = 57.2958 * Math.asin(Math.abs(y)/Math.abs(a));
     let flux = 0.35*wattage;
     let irr = flux*(2*alpha+Math.sin(2*(alpha/57.2958)))/(2*Math.PI*Math.PI*lamp_len*a)
 
