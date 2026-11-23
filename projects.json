@@ -1,0 +1,110 @@
+[
+  {
+    "slug": "chess-lessons",
+    "title": "The Madras Mate",
+    "pitch": "A chess course laid out as a newspaper: short articles and graded puzzles for players rated 1000 to 1500.",
+    "section": "featured",
+    "tags": ["learning", "game"],
+    "year": 2026
+  },
+  {
+    "slug": "graphics-lab",
+    "title": "Graphics Lab",
+    "pitch": "Two raw WebGL2 demos: Skybreak, a 3D flight game, and Umbra, a 2D game lit by real-time global illumination.",
+    "section": "featured",
+    "tags": ["graphics", "game"],
+    "year": 2026
+  },
+  {
+    "slug": "wololoop",
+    "title": "Wololoop",
+    "pitch": "An Age of Empires themed interview practice pad. Real Python 3 in the browser, ten staged problems, a timer and tests.",
+    "section": "featured",
+    "tags": ["tool", "learning"],
+    "year": 2026
+  },
+  {
+    "slug": "dog-game",
+    "title": "Dog Game",
+    "pitch": "A 2D platformer prototype with a companion dog, made in Godot and exported to the web.",
+    "section": "featured",
+    "tags": ["game"],
+    "year": 2026
+  },
+  {
+    "slug": "systematic-trading",
+    "title": "Systematic Trading Field Guide",
+    "pitch": "An offline-first study site for systematic trading strategy research.",
+    "section": "projects",
+    "tags": ["learning"],
+    "year": 2026
+  },
+  {
+    "slug": "life-in-the-uk",
+    "title": "Life in the UK Study App",
+    "pitch": "Chapter summaries and 854 flashcards for the Life in the UK test. Works offline and remembers your progress.",
+    "section": "projects",
+    "tags": ["learning"],
+    "year": 2026
+  },
+  {
+    "slug": "dino-bot",
+    "title": "Dino-Bot AI",
+    "pitch": "Neuroevolution teaches a population of dinosaurs to jump cacti, with a lab-themed control panel for watching generations improve.",
+    "section": "projects",
+    "tags": ["ai", "game"],
+    "year": 2025
+  },
+  {
+    "slug": "nextgen-tetris",
+    "title": "NextGen Tetris",
+    "pitch": "A Tetris engine in Go and a bot tuned by a genetic algorithm to play as long as it can.",
+    "section": "projects",
+    "tags": ["ai", "game"],
+    "year": 2025
+  },
+  {
+    "slug": "the-human-engineer",
+    "title": "The Human Quest",
+    "pitch": "Website for Professor Uma Batra's weekly letter, rebuilt as a static site from the original Framer design.",
+    "section": "for-others",
+    "tags": ["website"],
+    "year": 2026
+  },
+  {
+    "slug": "not-your-ai-overlords",
+    "title": "Not Your A.I. Overlords",
+    "pitch": "A Ghost theme for a tongue-in-cheek research publication, with a static preview for trying out ideas.",
+    "section": "for-others",
+    "tags": ["website", "theme"],
+    "year": 2026
+  },
+  {
+    "slug": "thekickassrepo",
+    "title": "The KickAss Repo",
+    "pitch": "A music visualiser built with the Web Audio API and D3. Load a song and watch it move.",
+    "section": "older",
+    "tags": ["graphics", "audio"],
+    "year": 2016
+  },
+  {
+    "slug": "mobile-uv",
+    "title": "Mobile UV Purification Calculator",
+    "pitch": "Sizes a UV lamp setup for disinfecting a cabinet: dimensions, object position, lamp output and exposure time.",
+    "section": "older",
+    "tags": ["tool"],
+    "year": 2020,
+    "url": "/public/mobile-uv/",
+    "repo": "https://github.com/saurabhbatra96/saurabhbatra96.github.io/tree/master/public/mobile-uv"
+  },
+  {
+    "slug": "air-purification",
+    "title": "Vehicular Cabin Air Purification",
+    "pitch": "A companion calculator for sizing air purification inside a vehicle cabin.",
+    "section": "older",
+    "tags": ["tool"],
+    "year": 2020,
+    "url": "/public/air-purification/",
+    "repo": "https://github.com/saurabhbatra96/saurabhbatra96.github.io/tree/master/public/air-purification"
+  }
+]

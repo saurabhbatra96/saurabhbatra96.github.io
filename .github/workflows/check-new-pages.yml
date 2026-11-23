@@ -1,0 +1,38 @@
+name: Check for new Pages projects
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # Mondays 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: check
+        run: |
+          set +e
+          node scripts/check-pages.mjs > report.txt
+          echo "missing=$?" >> "$GITHUB_OUTPUT"
+          cat report.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - if: steps.check.outputs.missing == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          title="New GitHub Pages project to add to the portfolio"
+          if gh issue list --state open --search "in:title \"$title\"" --json number --jq 'length' | grep -qv '^0$'; then
+            echo "An issue is already open."
+          else
+            { cat report.txt; echo; echo 'Add an entry to `projects.json`, run `npm run thumbs -- <slug>` and `npm run build`, then commit.'; } > body.md
+            gh issue create --title "$title" --body-file body.md
+          fi

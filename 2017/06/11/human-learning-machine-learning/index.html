@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      A Human Learning Machine Learning &middot; Eat a Bit of Pi
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/poole.css">
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/syntax.css">
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+
+                                 <link rel="shortcut icon" href="https://saurabhbatra96.github.io//public/logo.png">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/archive/">
+          Eat a Bit of Pi
+        </a>
+      </h1>
+      <p class="lead">Open source chronicles and personal blog of <a href="https://www.facebook.com/saurabhbatra" target="_blank">Saurabh Batra</a>; complete with a clich&#232;d punny title and all.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Portfolio</a>
+      <a class="sidebar-nav-item" href="/archive/">Blog archive</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="https://github.com/saurabhbatra96" target="_blank">GitHub</a>
+
+    </nav>
+
+    <p><strike>&copy; 2021. All rights reserved.</strike></p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <p class="archive-note" style="background:#fff8e1;border-left:4px solid #f0b429;padding:.6rem 1rem;font-size:.9rem;margin-bottom:2rem">This is the archive of my old blog (2016&ndash;2018), kept as it was. <a href="/">See what I&rsquo;m building now &rarr;</a></p>
+      <div class="post">
+  <h1 class="post-title">A Human Learning Machine Learning</h1>
+  <span class="post-date">11 Jun 2017</span>
+
+  <h3>Tags</h3>
+
+  <ul class="tags">
+    
+      <li class="tag">ai</li>
+    
+      <li class="tag">tetris</li>
+    
+      <li class="tag">ml</li>
+    
+      <li class="tag">machine-learning</li>
+    
+      <li class="tag">genetic-programming</li>
+    
+  </ul>
+
+  <hr>
+
+  <h2 id="roll-camera">Roll Camera</h2>
+
+<p>I have recently (read: since forever) been swamped by a lot stuff to do (read: procrastinate), which kind of explains (read: serves as a valid excuse) as to why I updated my blog after more than a year.</p>
+
+<p>Many a projects lie unfinished, collecting dust in my Github as a random tumbleweed rolls past complaining about the lack of documentation and the tardiness of code updates.</p>
+
+<p><em>Quick, cue cool graphics before you stop reading.</em> ༼ つ ◕_◕ ༽つ</p>
+
+<p><img src="/public/machinelearning/output.gif" style="display: block;" /></p>
+
+<!--more-->
+
+<h2 id="tetris">Tetris</h2>
+
+<p>Looking at the sparse expanse that my Github has become, I decided to get off my bum and make my computer play some Tetris for me.</p>
+
+<p>The aim was to just fool around and see how different playing strategies impacted the performance of my bot. The results were, well, pretty much as expected… or not.</p>
+
+<p><em>Just a disambiguation before I begin, score refers to the score obtained in the game while the objective function is a separate construct.</em></p>
+
+<h2 id="artificial-intelligence">Artificial Intelligence</h2>
+
+<div class="message">Human stupidity beats artificial intelligence every time.</div>
+
+<p>Starting off, lets see how well does a random bot perform (places blocks at random positions with random rotations applied):</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="w">    </span><span class="nl">"Average score"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">166</span><span class="w">
+    </span><span class="nl">"Number of trials"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">6685</span></code></pre></figure>
+
+<p>To compare, here’s the performance statistics for a greedy bot (places blocks such that current score is maximized):</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="w">    </span><span class="nl">"Average score"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">210</span><span class="w">
+    </span><span class="nl">"Number of trials"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span></code></pre></figure>
+
+<p>Comparable to the random bot, which kind of tells that greed might not be that good after all.</p>
+
+<p>Moving to a more intuitive strategy: minimize average height of columns at every step, drastically improves these statistics:</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="w">    </span><span class="nl">"Average score"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">726</span><span class="w">
+    </span><span class="nl">"Number of trials"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">10049</span></code></pre></figure>
+
+<p>Tinkering around a little more, I realized that minimizing the aggregate height of each block instead of column height was a better strategy (think about it, it penalizes increased height even more severely):</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="w">    </span><span class="nl">"Average score"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2423</span><span class="w">
+    </span><span class="nl">"Number of trials"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1001</span></code></pre></figure>
+
+<p><em>Drastic improvement!</em></p>
+
+<p><em>Hi fives all around!</em></p>
+
+<p>However, this is pretty much a very simple bot, whose goal is to optimize an objective function depending on just one factor - minimize aggregate block height; we need to go deeper.</p>
+
+<p>So, now I decided to make a simple addition to the objective function to reward line clears. Simply put, every time my bot clears a line of tetrominos, it gets +10 brownie points.</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="w">    </span><span class="nl">"Average score"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1382</span><span class="w">
+    </span><span class="nl">"Number of trials"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">9281</span></code></pre></figure>
+
+<p><img src="/public/machinelearning/mildshock.gif" style="display: block;" /></p>
+
+<p>Surely, clearing a line is a good thing, how does awarding that lead to a worse average score? This is where the machine learning aspect comes in.</p>
+
+<h2 id="bot-goes-to-school---the-machine-is-finally-learning">Bot Goes To School - The Machine is Finally Learning</h2>
+
+<p>When you think of AI, machine learning is a phrase that automatically pops up in your mind; but they are not synonyms. AI can and does produce excellent results without the help of ML simply by considering all possible outcomes and following them through!</p>
+
+<p>We achieved a perfectly average (it’s tough being average at Tetris, believe me, I tried) bot without using a byte of data to tune our bot.</p>
+
+<p>However, it is tough to judge according to what objective functions (rules) does the bot play better. Awarding line clears may seem intuitive to you, but maybe the bot is already doing that by rewarding minimum aggregate height!</p>
+
+<p>Suppose we came up with an objective function of our own:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">f</span><span class="p">(</span><span class="n">aggrHeight</span><span class="p">,</span> <span class="n">numLineClears</span><span class="p">,</span> <span class="n">numHoles</span><span class="p">)</span> <span class="o">=</span>
+  <span class="o">-</span><span class="n">heightMult</span><span class="o">*</span><span class="p">(</span><span class="n">aggrHeight</span><span class="p">)</span> <span class="o">+</span> <span class="n">lineMult</span><span class="o">*</span><span class="p">(</span><span class="n">numLineClears</span><span class="p">)</span> <span class="o">-</span> <span class="n">holeMult</span><span class="p">(</span><span class="n">numHoles</span><span class="p">)</span></code></pre></figure>
+
+<p>Punish more aggregate height and more number of holes (empty regions which cannot be reduced), reward line clears.</p>
+
+<p>Now our goal is to find optimum values for the coefficients so that the bot performs better (than what? read on) on average.</p>
+
+<h3 id="genetic-programming">Genetic Programming</h3>
+
+<p>The paradigm I chose to optimize my objective function is a little something called genetic programming. It behaves a lot like evolution, hence the name.</p>
+
+<p>Let’s call a triplet of values <code class="language-plaintext highlighter-rouge">(heightMult, lineMult, holeMult)</code> a <em>chromosome</em>.</p>
+
+<ul>
+  <li>
+    <p>We start with 16 such chromosomes filled with random values between -10.0 to 10.0.</p>
+  </li>
+  <li>
+    <p>We randomly select two chromosomes (triplets) and then make them compete in, say, a 100 games of Tetris. The one that performs better is kept while the loser is kept in a separate pile.</p>
+  </li>
+  <li>
+    <p>After all such competitions, half of the losers are randomly discarded.</p>
+  </li>
+  <li>
+    <p>Using the 8 winners that we have with us, we make 4 pairs and ahem, ahem… breed them together. During the breeding process we randomly (with 50-50 odds) select an attribute of one of the parents and keep it over the other parent’s attribute, thus giving us 4 new hybrid chromosomes.</p>
+  </li>
+  <li>
+    <p>We have our second generation of chromosomes with us (8 winners, 4 losers, 4 hybrids).</p>
+  </li>
+  <li>
+    <p>We make them compete again and again till the competing chromosomes start achieving better average scores than we want.</p>
+  </li>
+  <li>
+    <p>Then, we just select one lucky chromosome (just kidding, we select the best chromosome) to use for our bot!</p>
+  </li>
+</ul>
+
+<div class="message">This was a rather simplistic explanation of genetic programming, you can do a lot more with it, just Google it!</div>
+
+<h2 id="testing-out-the-lucky-chromosome">Testing Out The Lucky Chromosome</h2>
+
+<p>So how does the ML backed bot perform? Well, I don’t know because I never ever got around to completing it.</p>
+
+<p>I did write the boilerplate code for it but never got around to completing it. However, looking at the bright side of things, this does present an opportunity in case anyone wants to take up an introductory ML project (read: somebody please complete my code for me, I don’t have the time).</p>
+
+<h2 id="the-code">The Code</h2>
+
+<p>You can view the code over at my Github: <a href="https://github.com/saurabhbatra96/nextgen-tetris" target="_blank">NextGen-Tetris</a></p>
+
+<p>Or if you want to play around with it, just get it from the Go package manager.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>go get github.com/saurabhbatra96/nextgen-tetris</code></pre></figure>
+
+<p>Open your bin folder and run the <code class="language-plaintext highlighter-rouge">nextgen-tetris</code> binary with custom args: <em>height multiplier</em>, <em>line multiplier</em> and <em>hole mutiplier</em>.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>./nextgen-tetris <span class="nt">-1</span>.0 5.0 <span class="nt">-2</span>.5</code></pre></figure>
+
+<p>Go through the <code class="language-plaintext highlighter-rouge">genetic-prog</code> directory to have a look at the boilerplate for the genetic algorithm.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">tetris-data</code> directory has the statistics I stated above and the corresponding binaries that I used to compute the same. You can run them for yourself and corroborate my results.</p>
+
+<p><img src="/public/machinelearning/mleverywhere.jpg" style="width:100%;display: block;" /></p>
+
+</div>
+
+<div class="related">
+  <h2>Also See:</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/08/15/catching-fraud-at-wikipedia/">
+            Catching Fraud at the Wikimedia Foundation
+            <small>15 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/06/04/drive-sync-intro/">
+            drive-sync - The Idea, Application and Node.
+            <small>04 Jun 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+<!-- Disqus comments -->
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//eatabitofpi.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+<!-- Google analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-77807133-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    </div>
+
+  </body>
+</html>

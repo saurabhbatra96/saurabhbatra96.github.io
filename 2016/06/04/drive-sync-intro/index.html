@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      drive-sync - The Idea, Application and Node. &middot; Eat a Bit of Pi
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/poole.css">
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/syntax.css">
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+
+                                 <link rel="shortcut icon" href="https://saurabhbatra96.github.io//public/logo.png">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/archive/">
+          Eat a Bit of Pi
+        </a>
+      </h1>
+      <p class="lead">Open source chronicles and personal blog of <a href="https://www.facebook.com/saurabhbatra" target="_blank">Saurabh Batra</a>; complete with a clichèd punny title and all.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Portfolio</a>
+      <a class="sidebar-nav-item" href="/archive/">Blog archive</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="https://github.com/saurabhbatra96" target="_blank">GitHub</a>
+
+    </nav>
+
+    <p><strike>© 2021. All rights reserved.</strike></p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <p class="archive-note" style="background:#fff8e1;border-left:4px solid #f0b429;padding:.6rem 1rem;font-size:.9rem;margin-bottom:2rem">This is the archive of my old blog (2016&ndash;2018), kept as it was. <a href="/">See what I&rsquo;m building now &rarr;</a></p>
+      <div class="post">
+  <h1 class="post-title">drive-sync - The Idea, Application and Node.</h1>
+  <span class="post-date">04 Jun 2016</span>
+
+  <h3>Tags</h3>
+
+  <ul class="tags">
+    
+      <li class="tag">google</li>
+    
+      <li class="tag">drive</li>
+    
+      <li class="tag">google-api</li>
+    
+      <li class="tag">nodejs</li>
+    
+      <li class="tag">javascript</li>
+    
+      <li class="tag">cli</li>
+    
+  </ul>
+
+  <hr>
+
+  <p>If you’d rather not read the intro and jump to the application directly, visit the <a href="https://github.com/saurabhbatra96/drive-sync" target="_blank">Github page for drive-sync</a>. Most of the information you’d need is in the README file itself.</p>
+
+<h2 id="the-idea">The Idea</h2>
+<p>I’ve been using Ubuntu for quite some time now (more than a year) and the thing I love most about it is the flexibility its command line offers to its users. The learning curve might be steep but it pays off to delve into bash.</p>
+<div class="message">
+Inspired by this, I thought: "Wouldn't it be cool if I could access my files on the cloud using a <abbr title="Command Line Interface">cli</abbr>?"
+</div>
+
+<p>I wanted to develop a CLI application to control my Facebook. However, as it unfortunately turns out, the Facebook API does not expose enough data for me to be able to build the app flexible enough to my liking. What the Facebook API does support fully though, are applications which can predict <em>which celebrity do you look like the most</em>. <img class="emoji" title=":neutral_face:" alt=":neutral_face:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f610.png" height="20" width="20">
+<!--more--></p>
+
+<h2 id="the-application">The Application</h2>
+
+<p>If you’re running Linux, you might wanna head on over now to <a href="https://github.com/saurabhbatra96/drive-sync" target="_blank">the drive-sync repository</a> and follow the instructions in this section.</p>
+
+<p>Let’s get you set up, it’s really easy. If you do not have <code class="language-plaintext highlighter-rouge">node</code> and <code class="language-plaintext highlighter-rouge">npm</code> set up on your machine, you might want to install them by following the simple tutorial <a href="https://docs.npmjs.com/getting-started/installing-node" target="_blank">here</a> if you don’t have them already.</p>
+
+<p>Either clone the repository using git or you can use the zipped beta version from <a href="https://github.com/saurabhbatra96/drive-sync/releases/tag/v1.0-beta" target="_blank">here</a>. After you have the code stored in a directory navigate to it and use the <code class="language-plaintext highlighter-rouge">npm link</code> command to use <code class="language-plaintext highlighter-rouge">drive-sync</code> from your terminal.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone https://github.com/saurabhbatra96/drive-sync.git
+<span class="nv">$ </span><span class="nb">cd </span>drive-sync
+<span class="nv">$ </span>npm <span class="nb">link</span>
+<span class="nv">$ </span>drive-sync <span class="nb">pwd</span></code></pre></figure>
+
+<p>When you enter the <code class="language-plaintext highlighter-rouge">drive-sync pwd</code> command, you’ll be given a link by Google to navigate to. Open it up in your browser of choice, allow access to <code class="language-plaintext highlighter-rouge">drive-sync</code> and copy the code you see there to your terminal (paste using Ctrl+Shift+v FYI). Don’t worry, this is only a one time thing, you will not need to authenticate again!</p>
+
+<p><img src="/public/drivesync/drive1.png" style="width: 100%; display: block;"></p>
+
+<p>If you’re successful, you’ll be notified of some details of your main Google Drive folder. If you’re not, either reach out to me <a href="https://gitter.im/saurabhbatra96/drive-sync?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/saurabhbatra96/drive-sync.svg" alt="on gitter"></a>, file an <a href="https://github.com/saurabhbatra96/drive-sync/issues" target="_blank">issue on Github</a> or leave a comment here!</p>
+
+<p><img src="/public/drivesync/drive2.png" style="width: 100%; display: block;"></p>
+
+<p>Now all the commands which you can use are listed on the GitHub repository itself, however I’ll give you a small demo. Let’s say that I want to download all the files in a certain folder called “Drive Sync Test” from my Drive. What’s more, the said folder contains files of different kinds, there are images, pdfs, zipped files and also a Google Doc and a Google Spreadsheet.</p>
+
+<p>I’ll navigate to the said folder, and then all it takes is one command to do it all!</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>drive-sync <span class="nb">cd</span> <span class="s2">"Drive Sync Test"</span>
+Directory changed
+<span class="nv">$ </span>drive-sync down all</code></pre></figure>
+
+<p>Hey presto! All the files you needed are now downloaded/downloading to the folder you were currently in! What’s more, you’ll notice that the Google Docs have automatically been converted to a format that your PC can read (.doc for Docs and .xls for Sheet).</p>
+
+<p>But wait a moment, suppose you want the Google Doc in the form of a PDF rather than in Word format. Easy! All you have to do is use the export command!</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>drive-sync <span class="nb">export </span>testdoc pdf</code></pre></figure>
+
+<p>Now the Google Doc <code class="language-plaintext highlighter-rouge">testdoc</code> will be downloaded in the form of a pdf! To view the complete list of formats supported, head on over to the Github page, it’s all in the <a href="https://github.com/saurabhbatra96/drive-sync#usage" target="_blank">README</a>!</p>
+
+<h2 id="the-learnings-nodejs">The Learnings: NodeJS</h2>
+
+<p>I’ll start off with admitting that NodeJS was perhaps not the best of choices for this project. The major reason being, JavaScript in its inherent nature is <strong>asynchronous</strong> in nature while CLI applications in general wait for user input to occur before processing (duh). JavaScript is perhaps the first <em>dynamic</em> language that I learned to use, and this is something I did not know until I made drive-sync, so do not feel shy to ask what does it mean?</p>
+
+<div class="message">
+JavaScript in its inherent nature is <b>asynchronous</b> in nature.
+</div>
+
+<p>I’ll illustrate the concept of asynchronicity below, but if you’re interested to read more in depth, I found <a href="https://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/" target="_blank">this article</a> instructive about the basic concepts of functional programming.</p>
+
+<h3 id="callbacks">Callbacks</h3>
+
+<p>Suppose I have a file named <code class="language-plaintext highlighter-rouge">readme.json</code> with the following contents:</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"dummy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value"</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>Now I’ll make a file <code class="language-plaintext highlighter-rouge">test.js</code> with the following contents. It should be easy to follow what it does by reading the comments.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// test.js</span>
+
+<span class="c1">// Let's include the default file system module from the Node library.</span>
+<span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">fs</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">jsondata</span> <span class="o">=</span> <span class="p">{</span><span class="dl">"</span><span class="s2">dummy</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">value2</span><span class="dl">"</span><span class="p">};</span>
+
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="dl">'</span><span class="s1">readme.json</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="nx">jsondata</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jsondata</span><span class="p">.</span><span class="nx">dummy</span><span class="p">);</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>I know that something looks fishy here, patience though! Running the program gives the output you would expect.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>node test.js
+value</code></pre></figure>
+
+<p>I’ll just add another console.log after the readFile method of fs to double check:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// test.js</span>
+
+<span class="c1">// Let's include the default file system module from the Node library.</span>
+<span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">fs</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">jsondata</span> <span class="o">=</span> <span class="p">{</span><span class="dl">"</span><span class="s2">dummy</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">value2</span><span class="dl">"</span><span class="p">};</span>
+
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="dl">'</span><span class="s1">readme.json</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="nx">jsondata</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jsondata</span><span class="p">.</span><span class="nx">dummy</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jsondata</span><span class="p">.</span><span class="nx">dummy</span><span class="p">);</span></code></pre></figure>
+
+<p>The output:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>node test.js
+value2
+value</code></pre></figure>
+
+<p>But… But… How is this possible? Nothing makes sense here! Clearly <code class="language-plaintext highlighter-rouge">jsondata.dummy</code> should be set as <code class="language-plaintext highlighter-rouge">value</code>? Then why is the output so?</p>
+
+<div class="message">
+The (not so) simple answer lies in the asynchronous nature of JavaScript. JavaScript tends to run in a single thread.
+</div>
+
+<p>The function which we passed to <code class="language-plaintext highlighter-rouge">fs.readFile</code>, which sets <code class="language-plaintext highlighter-rouge">jsondata.dummy</code> to <code class="language-plaintext highlighter-rouge">value</code> is called a <em>callback function</em>. What it implies is that once <code class="language-plaintext highlighter-rouge">fs.readFile</code> returns a marker that the file has been read, this function will be <em>called back</em>. All this while, the thread is left for other processes, i.e. the <code class="language-plaintext highlighter-rouge">console.log(jsondata.dummy)</code> statement at the end. So, in spite of being written after the readFile method, this line returns the old value of <code class="language-plaintext highlighter-rouge">jsondata</code> because the function before has not been processed yet!</p>
+
+<p>Whew! You might want to read that again <strong>or</strong> you could wait till your head stops spinning when you realize that sequential programming is no more. Kidding.</p>
+
+<p>There are ways to make such asynchronous functions synchronous. The one which I found easiest to use was the <code class="language-plaintext highlighter-rouge">deasync</code> module. More on it later. For now, take <code class="language-plaintext highlighter-rouge">drive-sync</code> out for a spin and leave your feedback and suggestions down below in the comments section.</p>
+
+<h2 id="contributing">Contributing</h2>
+
+<p>Before I finish off, I’d like to state that I’m more than happy to provide direction if people want to help me add functionality to the project. I already have some ideas I will be working on, and I also listed them in the issues section on the Github repository. Feel free to add more to the list and help me implement them!</p>
+
+<p>PS: If you want me to do a blog explaining the working code of <code class="language-plaintext highlighter-rouge">drive-sync</code> do not forget to leave a comment!</p>
+
+</div>
+
+<div class="related">
+  <h2>Also See:</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/08/15/catching-fraud-at-wikipedia/">
+            Catching Fraud at the Wikimedia Foundation
+            <small>15 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2017/06/11/human-learning-machine-learning/">
+            A Human Learning Machine Learning
+            <small>11 Jun 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+<!-- Disqus comments -->
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//eatabitofpi.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+
+<!-- Google analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-77807133-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    </div>
+
+  </body>
+</html>

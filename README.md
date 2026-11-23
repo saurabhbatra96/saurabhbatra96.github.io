@@ -1,7 +1,17 @@
-# Hyde
+# saurabhbatra96.github.io
 
-Hyde is a brazen two-column [Jekyll](http://jekyllrb.com) theme that pairs a prominent sidebar with uncomplicated content. It's based on [Poole](http://getpoole.com), the Jekyll butler.
+A portfolio of every project I host on GitHub Pages, plus the archive of my old blog (2016–2018).
 
-![Hyde screenshot](https://f.cloud.github.com/assets/98681/1831228/42af6c6a-7384-11e3-98fb-e0b923ee0468.png)
+The site is plain static HTML served as-is (`.nojekyll`). `index.html` is generated, so edit the sources below instead.
 
+## Adding a project
 
+1. Add an entry to `projects.json`. `section` is one of `featured`, `projects`, `for-others` or `older`. Projects hosted at `/<repo>/` only need `slug`; others set `url` (and `repo`).
+2. `npm install` (first time only), then `npm run thumbs -- <slug>` to screenshot the live page into `thumbs/`.
+3. `npm run build` to regenerate `index.html`, then commit.
+
+A weekly workflow (`.github/workflows/check-new-pages.yml`) opens an issue when a repo has Pages turned on but isn't in `projects.json`. Run it locally with `npm run check`.
+
+## Old blog
+
+The Jekyll blog was frozen as rendered HTML on 2026-11-23. Posts keep their original URLs (`/2016/…`, `/about/`, `/atom.xml`); the old front page lives at `/archive/`. `public/` holds the blog's images plus the two 2020 calculators. The Jekyll source is in this repo's history and under the `blog-archive-2021` tag.

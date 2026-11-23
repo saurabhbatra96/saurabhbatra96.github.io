@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Opening up to Open Source - Part 2 &middot; Eat a Bit of Pi
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/poole.css">
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/syntax.css">
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+
+                                 <link rel="shortcut icon" href="https://saurabhbatra96.github.io//public/logo.png">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/archive/">
+          Eat a Bit of Pi
+        </a>
+      </h1>
+      <p class="lead">Open source chronicles and personal blog of <a href="https://www.facebook.com/saurabhbatra" target="_blank">Saurabh Batra</a>; complete with a clichèd punny title and all.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Portfolio</a>
+      <a class="sidebar-nav-item" href="/archive/">Blog archive</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="https://github.com/saurabhbatra96" target="_blank">GitHub</a>
+
+    </nav>
+
+    <p><strike>© 2021. All rights reserved.</strike></p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <p class="archive-note" style="background:#fff8e1;border-left:4px solid #f0b429;padding:.6rem 1rem;font-size:.9rem;margin-bottom:2rem">This is the archive of my old blog (2016&ndash;2018), kept as it was. <a href="/">See what I&rsquo;m building now &rarr;</a></p>
+      <div class="post">
+  <h1 class="post-title">Opening up to Open Source - Part 2</h1>
+  <span class="post-date">14 May 2016</span>
+
+  <h3>Tags</h3>
+
+  <ul class="tags">
+    
+      <li class="tag">open-source</li>
+    
+      <li class="tag">civicrm</li>
+    
+      <li class="tag">git</li>
+    
+      <li class="tag">github</li>
+    
+      <li class="tag">gsoc</li>
+    
+  </ul>
+
+  <hr>
+
+  <p>I highly recommend that you read <a href="/2016/05/12/opening-up-to-open-source-part-1/">part 1</a> of this series if you haven’t yet.</p>
+
+<h2 id="writing-your-first-real-patch">Writing Your First <em>Real</em> Patch</h2>
+
+<p>So let’s get started with how to write a simple patch for your organization. Although keep in mind I’ll be writing this patch for <a href="http://civicrm.org/">CiviCRM</a> and the exact procedure that your organization recommends might differ slightly.</p>
+
+<h3 id="finding-a-worthy-issue">Finding a Worthy Issue</h3>
+
+<p>One way to go about finding a bug to fix is to prowl their bug trackers, search for issues tagged as <code class="language-plaintext highlighter-rouge">starter</code> or <code class="language-plaintext highlighter-rouge">trivial</code> and comment that you want that issue to be assigned to you. However, most issues tagged <code class="language-plaintext highlighter-rouge">trivial</code> are only <strong><em>trivial</em></strong> for developers that have considerable experience working with that code-base.</p>
+
+<p>Instead I’d recommend that you ask your mentor to assign you an issue and provide you with a brief summary of how to go about fixing it.</p>
+
+<!--more-->
+
+<h3 id="what-next">What Next?</h3>
+
+<p>Okay, I’ll assume you’ve found a nice issue for yourself. I myself found a rather simple one for this tutorial:</p>
+
+<p><img src="/public/opentoopen/opentoopen2.png" style="width: 100%; display: block;"></p>
+
+<p>As you can see (or maybe not, but you’ll learn to see) the issue requires us to make a change in a certain table. CiviCRM uses upgrade scripts for this purpose. I Googled “upgrade scripts civicrm” and got <a href="https://wiki.civicrm.org/confluence/display/CRMDOC/Upgrade+Reference" target="_blank">this</a> result. Have a look through that page if you wish to, or you can <a href="https://www.psychologytoday.com/blog/close-encounters/201407/can-you-really-trust-the-people-you-meet-online" target="_blank">blindly trust my word</a> that it contains everything we need to solve our issue. <img class="emoji" title=":+1:" alt=":+1:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" height="20" width="20"></p>
+
+<h3 id="working-with-version-control">Working With Version Control</h3>
+
+<p>I’m assuming that you have some basic knowledge of working with version control. If not, <a href="https://git-scm.com/docs/gittutorial" target="_blank">this tutorial</a> hosted by Git should have you up and running Git within half an hour or so of reading.</p>
+
+<p>Let’s make a new branch where we’ll solve the issue. I’ll just name the branch <strong>CRM-18537</strong> to represent the issue id.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git checkout upstream/master <span class="nt">-b</span> CRM-18537</code></pre></figure>
+
+<h3 id="change-the-required-code">Change the Required Code</h3>
+
+<p>This is the part where I’ll mostly fast forward and just show you the required changes.</p>
+<div class="message">This is something you have to figure out on your own, you will not find a blog telling you how to fix every bug you face.</div>
+
+<p><img src="/public/opentoopen/opentoopen2-1.png" style="width: 100%; display: block;"></p>
+
+<p>We’ll just add this simple SQL query to delete the corresponding field.</p>
+
+<p><img src="/public/opentoopen/opentoopen2-2.png" style="width: 100%; display: block;">
+<img src="/public/opentoopen/opentoopen2-3.png" style="width: 100%; display: block;"></p>
+
+<p>And delete the corresponding values in these two files. (<a href="https://wiki.civicrm.org/confluence/display/CRMDOC/Upgrade+Reference" target="_blank">How did I know what to do?</a>)</p>
+
+<h3 id="committing-your-changes">Committing Your Changes</h3>
+
+<p>Great! You’ve successfully made your first change to the code-base. How to go about converting this into a patch?</p>
+
+<p>Let’s start by committing your changes and pushing them to your forked repository.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s2">"CRM-18537 Remove Brazilian state."</span>
+<span class="nv">$ </span>git push https://github.com/username/civicrm-core.git CRM-18537</code></pre></figure>
+
+<p>Enter your GitHub username and password and head on over to <a href="https://www.github.com" target="_blank">GitHub</a>.</p>
+
+<p>On your GitHub dashboard, you’ll find a notification telling you that you pushed some code to a new branch <code class="language-plaintext highlighter-rouge">CRM-18537</code>. Click on the green create a pull request button, add a brief description, review your changes one last time (not really the last time) and finish up.</p>
+
+<p><img src="/public/opentoopen/opentoopen2-4.png" style="width: 100%; display: block;"></p>
+
+<p>Congratulations! You have your first PR ready to be merged (or closed)! <img class="emoji" title=":grin:" alt=":grin:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f601.png" height="20" width="20"></p>
+
+<p>How to make changes to your PRs, what is testing, rebasing and the wonderful utility called grep. Continued in part 3.</p>
+
+</div>
+
+<div class="related">
+  <h2>Also See:</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/08/15/catching-fraud-at-wikipedia/">
+            Catching Fraud at the Wikimedia Foundation
+            <small>15 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2017/06/11/human-learning-machine-learning/">
+            A Human Learning Machine Learning
+            <small>11 Jun 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+<!-- Disqus comments -->
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//eatabitofpi.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+
+<!-- Google analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-77807133-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    </div>
+
+  </body>
+</html>

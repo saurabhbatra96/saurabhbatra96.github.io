@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Sublime Text vs GitHub's Atom &middot; Eat a Bit of Pi
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/poole.css">
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/syntax.css">
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+
+                                 <link rel="shortcut icon" href="https://saurabhbatra96.github.io//public/logo.png">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/archive/">
+          Eat a Bit of Pi
+        </a>
+      </h1>
+      <p class="lead">Open source chronicles and personal blog of <a href="https://www.facebook.com/saurabhbatra" target="_blank">Saurabh Batra</a>; complete with a clich&#232;d punny title and all.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Portfolio</a>
+      <a class="sidebar-nav-item" href="/archive/">Blog archive</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="https://github.com/saurabhbatra96" target="_blank">GitHub</a>
+
+    </nav>
+
+    <p><strike>&copy; 2021. All rights reserved.</strike></p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <p class="archive-note" style="background:#fff8e1;border-left:4px solid #f0b429;padding:.6rem 1rem;font-size:.9rem;margin-bottom:2rem">This is the archive of my old blog (2016&ndash;2018), kept as it was. <a href="/">See what I&rsquo;m building now &rarr;</a></p>
+      <div class="post">
+  <h1 class="post-title">Sublime Text vs GitHub's Atom</h1>
+  <span class="post-date">16 May 2016</span>
+
+  <h3>Tags</h3>
+
+  <ul class="tags">
+    
+      <li class="tag">text-editors</li>
+    
+      <li class="tag">sublime-text</li>
+    
+      <li class="tag">atom</li>
+    
+      <li class="tag">github</li>
+    
+  </ul>
+
+  <hr>
+
+  <p>If <code class="language-plaintext highlighter-rouge">vim</code> is too basic for you but IDEs feel too slow and sluggish, chances are you probably have been using Sublime Text as your preferred text editor. Now GitHub has an open source editor in town called <code class="language-plaintext highlighter-rouge">Atom</code> which might give competition to our beloved Sublime.</p>
+
+<p>I took it out for a spin and used it as my default editor for a week and the following is my honest review of whether I think Atom can stand up to or even overcome the legacy <abbr title="Sublime Text">ST</abbr> has built for itself over the years.</p>
+
+<!--more-->
+
+<h2 id="time">Time</h2>
+
+<p>The biggest problem that has plagued Atom has been the issue of how slow it is to load. Given its bloated web-app like back-end, it is unsurprising how bad the load times can sometimes be.</p>
+
+<div class="message">
+  "Atom is a desktop application built with HTML, JavaScript, CSS, and Node.js integration.
+  It runs on Electron, a framework for building cross platform apps using web technologies."
+  - the folks over at GitHub
+</div>
+
+<p>I did a test with the Linux utility <code class="language-plaintext highlighter-rouge">time</code> to test how the loading time compares between Atom and ST2 while opening a moderate sized file and a “heavy” file. Please note that both of the files were loaded from the cache.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-l</span>
+<span class="nt">-rw-rw-r--</span> 1 saurabh saurabh  48281 May  7 18:15 report.tex
+<span class="nt">-rw-rw-r--</span> 1 saurabh saurabh 1369118 May 16 12:49 civicrm_generated.mysql
+
+<span class="nv">$ </span><span class="nb">time </span>subl report.tex  // ~50 kb file
+
+real	0m0.013s
+user	0m0.009s
+sys	0m0.004s
+
+<span class="nv">$ </span><span class="nb">time </span>atom-beta report.tex
+
+real	0m0.023s
+user	0m0.006s
+sys	0m0.018s
+
+<span class="nv">$ </span><span class="nb">time </span>subl civicrm_generated.mysql  // ~1.5 Mb file
+
+real	0m0.013s
+user	0m0.008s
+sys	0m0.004s
+
+<span class="nv">$ </span><span class="nb">time </span>atom-beta civicrm_generated.mysql
+
+real	0m0.022s
+user	0m0.002s
+sys	0m0.021s</code></pre></figure>
+
+<p>Now, if you’re interested in finding out what these outputs mean, there’s a rather nice StackOverflow answer <a href="https://stackoverflow.com/questions/556405/what-do-real-user-and-sys-mean-in-the-output-of-time1" target="_blank">here</a>.</p>
+
+<p>If you would rather read the summary, <strong>Real</strong> is wall clock time - time from start to finish of the call, <strong>User+Sys</strong> will tell you how much actual CPU time your process used.</p>
+
+<p>You can see how Sublime beats Atom hands down. On top of this, the Atom GUI takes much more time to load than the Sublime Text one; I could swear there have been times when I waited for more than 5 seconds for Atom to open a file when it was not loading from the cache.</p>
+
+<h2 id="hackability">Hackability</h2>
+
+<p>Hold on there, I know the time statistics can be off putting and severely favor Sublime Text. However, GitHub has traded time constraints for a good enough reason.</p>
+
+<p>As mentioned before, Atom is basically a web-app running on Electron. This makes it extremely easy to customize your editor the way you want and is the most exciting aspect of the product. I haven’t done anything useful with it yet, however I did tinker around a bit and totally loved how flexible things are.</p>
+
+<p>For example, for customizing your theme, all you need is some basic knowledge of CSS. I was running the Solarized: Light theme before the changes.</p>
+
+<p><img src="/public/atom/atom1.png" style="width: 100%; display: block;" /></p>
+
+<p>Output:</p>
+
+<p><img src="/public/atom/atom2.png" style="width: 100%; display: block;" /></p>
+
+<p>Also, you can hack into the <code class="language-plaintext highlighter-rouge">init script</code>, i.e. the script (written in CoffeeScript BTW) and have custom initializations when the editor starts.</p>
+
+<p><img src="/public/atom/atom3.png" style="width: 100%; display: block;" /></p>
+
+<p>Output:</p>
+
+<p><img src="/public/atom/atom4.png" style="width: 100%; display: block;" /></p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>I could go on and on about how the two text editors vary ever so slightly in other aspects as well, but then <a href="https://atom.io/packages/unregistered" target="_blank">somebody would develop a package and prove me wrong</a>.</p>
+
+<p>To sum it up, I loved how easy it was to experiment with Atom, but, I still love Sublime Text too much to use Atom in my regular coding sessions. The speed more than makes up for the slight lack of hackability.</p>
+
+</div>
+
+<div class="related">
+  <h2>Also See:</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/08/15/catching-fraud-at-wikipedia/">
+            Catching Fraud at the Wikimedia Foundation
+            <small>15 Aug 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2017/06/11/human-learning-machine-learning/">
+            A Human Learning Machine Learning
+            <small>11 Jun 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+<!-- Disqus comments -->
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//eatabitofpi.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+<!-- Google analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-77807133-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    </div>
+
+  </body>
+</html>

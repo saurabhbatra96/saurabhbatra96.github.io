@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Catching Fraud at the Wikimedia Foundation &middot; Eat a Bit of Pi
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/poole.css">
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/syntax.css">
+  <link rel="stylesheet" href="https://saurabhbatra96.github.io//public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+
+                                 <link rel="shortcut icon" href="https://saurabhbatra96.github.io//public/logo.png">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/archive/">
+          Eat a Bit of Pi
+        </a>
+      </h1>
+      <p class="lead">Open source chronicles and personal blog of <a href="https://www.facebook.com/saurabhbatra" target="_blank">Saurabh Batra</a>; complete with a clich&#232;d punny title and all.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Portfolio</a>
+      <a class="sidebar-nav-item" href="/archive/">Blog archive</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+
+      <a class="sidebar-nav-item" href="https://github.com/saurabhbatra96" target="_blank">GitHub</a>
+
+    </nav>
+
+    <p><strike>&copy; 2021. All rights reserved.</strike></p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <p class="archive-note" style="background:#fff8e1;border-left:4px solid #f0b429;padding:.6rem 1rem;font-size:.9rem;margin-bottom:2rem">This is the archive of my old blog (2016&ndash;2018), kept as it was. <a href="/">See what I&rsquo;m building now &rarr;</a></p>
+      <div class="post">
+  <h1 class="post-title">Catching Fraud at the Wikimedia Foundation</h1>
+  <span class="post-date">15 Aug 2018</span>
+
+  <h3>Tags</h3>
+
+  <ul class="tags">
+    
+      <li class="tag">wikimedia-foundation</li>
+    
+      <li class="tag">wikipedia</li>
+    
+      <li class="tag">fundraising</li>
+    
+      <li class="tag">fraud-detection</li>
+    
+      <li class="tag">machine-learning</li>
+    
+      <li class="tag">ai</li>
+    
+  </ul>
+
+  <hr>
+
+  <p><strong><em>Disclaimer - a lot of the values quoted below are ball-park figures given to estimate performance and results of this project. They are not to be confused as official Wikimedia Foundation Fundraising data.</em></strong></p>
+
+<h2 id="donations-and-fraud-at-wmf">Donations and fraud at WMF</h2>
+<p>Thanks to donors all over the globe supporting Wikipedia and her sister sites, the Wikimedia Foundation receives millions of donations in any given year. In the fiscal year 2016-17 WMF raised <a href="https://foundation.wikimedia.org/wiki/2016-2017_Fundraising_Report" target="_blank">$91 million from over 6.1 million donations</a>! Unfortunately the donations were not bereft of fraudulent transactions - transactions either made using stolen credit card details or made explicitly with the intent to harm WMF by causing monetary loss in the form of chargeback fees.</p>
+
+<p>Frauds are usually anomalies when it comes to donations, but even assuming that frauds form only 1% of all transactions - that is still 61,000 transactions in the year 16-17. Taking into account that usually chargeback fees range from <a href="https://www.paypal.com/us/webapps/mpp/merchant-fees#chargeback-fees" target="_blank">$15-$20</a> across various payment gateways, chargeback payments alone would cost WMF $1,220,000!</p>
+
+<h2 id="fraud-detection-workflow">Fraud detection workflow</h2>
+<p>WMF Fundraising proactively works to make sure that fraudulent transactions are detected before they can be “successful”. The current workflow looks something like this -</p>
+
+<p><img src="/public/wmf-fd/fd-workflow.png" style="display: block; width: 100%;" />
+<!--more--></p>
+
+<p>While this approach worked just fine for a few years, statistics show that the performance of filters and Minfraud has continuously degraded over the years - with a lot of heavy lifting being done by donor services instead. Not only does this cost WMF money in the form of merchant refund fee but it also costs us in terms of man-hours spent looking at these transactions.</p>
+
+<h2 id="research">Research</h2>
+<p>In order to improve WMF’s automatic fraud-detection rates, we started experimenting with machine learning techniques for anomaly detection. After a few weeks of experiments, we decided to go forward and use ensemble techniques like <a href="https://en.wikipedia.org/wiki/Random_forest" target="_blank">random forests</a> and <a href="https://en.wikipedia.org/wiki/Gradient_boosting" target="_blank">gradient boosting</a> to classify our transactions as fraud/genuine.</p>
+
+<p>Both of these techniques involve the use of <a href="https://en.wikipedia.org/wiki/Decision_tree" target="_blank">decision trees</a>. Decision trees are very easy to visualize and intuitive to understand. Our classifiers make use of an ensemble of them - that is, several such trees are learned by our model by going through the data and the outputs of these are taken into account when making a final decision on how to classify the input.</p>
+
+<div style="width: 90%; font-size: 80%; text-align: center;"><img style="width: 70%; padding-bottom: 0.5em;" src="/public/wmf-fd/d-tree.png" /><br />A decision tree for my plans this weekend.</div>
+
+<p><br />
+Our metrics for measuring model performance were twofold - <strong>precision</strong> and <strong>recall</strong>.</p>
+
+<p>Precision in our case refers to “out of all the predictions made by the model, what percentage were actually fraudulent”. Recall refers to “out of all the fraudulent transactions, what percentage were correctly captured by our model”. Concentrating on only one is not enough, a healthy mixture of both is required. For example a model which just checks whether the name field is empty in a donation may be remarkably precise but will not cover a large spectrum of fraudulent transactions.</p>
+
+<p>Precision and recall can be easily calculated by first calculating the following -</p>
+
+<ul>
+  <li><strong>True Positives (TP)</strong> - transactions which were marked fraud by the model and were actually fraud.</li>
+  <li><strong>False Positives (FP)</strong> - transactions which were marked fraud by the model and were actually genuine.</li>
+  <li><strong>False Negatives (FN)</strong> - transactions which were marked genuine by the model and were actually fraud.</li>
+</ul>
+
+<p>Using these, precision and recall come out to be: <code class="language-plaintext highlighter-rouge">Precision = TP / (TP + FP)</code> and <code class="language-plaintext highlighter-rouge">Recall = TP / (TP + FN)</code>.</p>
+
+<p><a href="https://commons.wikimedia.org/wiki/File:Precisionrecall.svg#/media/File:Precisionrecall.svg" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Precisionrecall.svg/1200px-Precisionrecall.svg.png" alt="Precisionrecall.svg" style="display: block; width: 70%;" /></a></p>
+
+<p>Ideally we want the values of precision and recall both to be as high as possible, however that is not always possible as an increase in one usually means a decrease in the other. We were able to capture the precision-recall tradeoffs and plot the following curve.</p>
+
+<p><img src="/public/wmf-fd/gb-tuned.png" style="display: block; width: 100%;" />
+<a name="results-and-comparisions"></a></p>
+<h2 id="results-and-comparisions">Results and comparisions</h2>
+<p>In a comparision of our classifier v/s the filters - we observed that statistically our classifier could’ve caused recall to increase about 50 points in the fiscal year 2017-2018 while maintaining the same 90%+ precision. A whopping 142% increase in the amount of fraud caught before a transaction is marked as complete, all the while maintaining the same percentage of false positives.</p>
+
+<p>Benefits of the system include:</p>
+<ul>
+  <li>could potentially save WMF tens of thousands of dollars in an year in the form of refund/chargeback fees.</li>
+  <li>does not get out-dated like filters do - our classifiers learn to recognize trends in fraud as they evolve.</li>
+  <li>easily maintainable - the underlying code and architecture need not be updated for the model to function effectively, we just need to re-train the model and swap it out every few months.</li>
+  <li>numerous Donor Services man-hours are saved as the classifier only marks 35% of transactions incorrectly (fraud as genuine + genuine as fraud) as compared to our filters.</li>
+</ul>
+
+<h2 id="proposed-and-current-architecture">Proposed (and current) architecture</h2>
+<p>The classifier is to be made available to the WMF transaction flow as an intermediate RESTful web service. A working prototype of the API is ready and available <a href="" target="_blank">here</a>.</p>
+
+<p>The API acts as a facade for a running instance of our classifier which effectively serves all requests.</p>
+
+<p>However, the problem of generating and re-generating the classifier for the API is still semi-solved. Currently, to re-generate the classifier -</p>
+<ol>
+  <li>We run a couple of SQL queries to get our data out as CSVs.</li>
+  <li>Run a script on the data which pre-processes it for training.</li>
+  <li>Run another python script which trains our model.</li>
+  <li>Copy-paste the model into the API folder which uses this as a backend to service its requests.</li>
+</ol>
+
+<p>All of the above steps are well-documented and are verifiably reproducable using code snippets as detailed in <a href="https://github.com/saurabhbatra96/wmf-fraud-pipeline/#wmf-fraud-pipeline" target="_blank">this repo</a>.</p>
+
+<p>This process is to be replaced by a pipeline which automates all these steps, hopefully limiting the need of manual intervention.</p>
+
+<h2 id="future-work">Future work</h2>
+<p>We are far from finished on this! Not only are we chasing better classifier performance and a fluider architecture; we started off with the lofty goal of making a high-quality, truly open-source credit-card fraud detection system and we intend to make it happen.</p>
+
+<p>While the indecipherability of the decision making process of machine learning models is considered a con, here it helps in obfuscating the same process from fraudsters - even though they might have the code readily available!</p>
+
+<p>Currently, we have 3 major tasks on our plate -</p>
+<ol>
+  <li>Integrate with WMF transaction workflow. Seeing how our model performs on new data would help us make sure that our approach is “correct” and it works.</li>
+  <li>Developing a pipeline which automates the task of classifier generation from data.</li>
+  <li>De-coupling the API and the pipeline from our data schema so that the code can be used and tested by other non-profits/organizations wanting to incorporate this into their in-house fraud detection service.</li>
+</ol>
+
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>This post and this work wouldn’t have been possible without help and continuous intervention from Adam Wight, Eileen McNaughton and the rest of WMF fr-tech!</p>
+
+</div>
+
+<div class="related">
+  <h2>Also See:</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2017/06/11/human-learning-machine-learning/">
+            A Human Learning Machine Learning
+            <small>11 Jun 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/06/04/drive-sync-intro/">
+            drive-sync - The Idea, Application and Node.
+            <small>04 Jun 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+<!-- Disqus comments -->
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//eatabitofpi.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+<!-- Google analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-77807133-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    </div>
+
+  </body>
+</html>

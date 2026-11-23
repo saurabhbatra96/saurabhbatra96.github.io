@@ -1,31 +1,145 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ site.title | xml_escape }}</title>
-    <description>{{ site.description | xml_escape }}</description>
-    <link>{{ site.url }}{{ site.baseurl }}/</link>
-    <atom:link href="{{ "/feed-gsoc.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
-    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
-    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
-    <generator>Jekyll v{{ jekyll.version }}</generator>
-    {% for post in site.tags.gsoc limit:10 %}
+    <title>Eat a Bit of Pi</title>
+    <description>Open source chronicles and personal blog of &lt;a href=&quot;https://www.facebook.com/saurabhbatra&quot; target=&quot;_blank&quot;&gt;Saurabh Batra&lt;/a&gt;; complete with a clich&amp;#232;d punny title and all.</description>
+    <link>https://saurabhbatra96.github.io//</link>
+    <atom:link href="https://saurabhbatra96.github.io//feed-gsoc.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 15 May 2021 17:10:09 +0000</pubDate>
+    <lastBuildDate>Sat, 15 May 2021 17:10:09 +0000</lastBuildDate>
+    <generator>Jekyll v3.9.0</generator>
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.content | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
-        <guid isPermaLink="true">{{ post.url | prepend: site.baseurl | prepend: site.url }}</guid>
-    {% for tag in post.tags %}<category term="{{ tag }}"/>{% endfor %}
-        {% for tag in page.tags %}
-        <category>{{ tag | xml_escape }}</category>
-        {% endfor %}
-        {% for cat in page.categories %}
-        <category>{{ cat | xml_escape }}</category>
-        {% endfor %}
+        <title>Opening up to Open Source - Part 2</title>
+        <description>&lt;p&gt;I highly recommend that you read &lt;a href=&quot;/2016/05/12/opening-up-to-open-source-part-1/&quot;&gt;part 1&lt;/a&gt; of this series if you haven’t yet.&lt;/p&gt;
+
+&lt;h2 id=&quot;writing-your-first-real-patch&quot;&gt;Writing Your First &lt;em&gt;Real&lt;/em&gt; Patch&lt;/h2&gt;
+
+&lt;p&gt;So let’s get started with how to write a simple patch for your organization. Although keep in mind I’ll be writing this patch for &lt;a href=&quot;http://civicrm.org/&quot;&gt;CiviCRM&lt;/a&gt; and the exact procedure that your organization recommends might differ slightly.&lt;/p&gt;
+
+&lt;h3 id=&quot;finding-a-worthy-issue&quot;&gt;Finding a Worthy Issue&lt;/h3&gt;
+
+&lt;p&gt;One way to go about finding a bug to fix is to prowl their bug trackers, search for issues tagged as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;starter&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;trivial&lt;/code&gt; and comment that you want that issue to be assigned to you. However, most issues tagged &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;trivial&lt;/code&gt; are only &lt;strong&gt;&lt;em&gt;trivial&lt;/em&gt;&lt;/strong&gt; for developers that have considerable experience working with that code-base.&lt;/p&gt;
+
+&lt;p&gt;Instead I’d recommend that you ask your mentor to assign you an issue and provide you with a brief summary of how to go about fixing it.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;what-next&quot;&gt;What Next?&lt;/h3&gt;
+
+&lt;p&gt;Okay, I’ll assume you’ve found a nice issue for yourself. I myself found a rather simple one for this tutorial:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/opentoopen/opentoopen2.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As you can see (or maybe not, but you’ll learn to see) the issue requires us to make a change in a certain table. CiviCRM uses upgrade scripts for this purpose. I Googled “upgrade scripts civicrm” and got &lt;a href=&quot;https://wiki.civicrm.org/confluence/display/CRMDOC/Upgrade+Reference&quot; target=&quot;_blank&quot;&gt;this&lt;/a&gt; result. Have a look through that page if you wish to, or you can &lt;a href=&quot;https://www.psychologytoday.com/blog/close-encounters/201407/can-you-really-trust-the-people-you-meet-online&quot; target=&quot;_blank&quot;&gt;blindly trust my word&lt;/a&gt; that it contains everything we need to solve our issue. :+1:&lt;/p&gt;
+
+&lt;h3 id=&quot;working-with-version-control&quot;&gt;Working With Version Control&lt;/h3&gt;
+
+&lt;p&gt;I’m assuming that you have some basic knowledge of working with version control. If not, &lt;a href=&quot;https://git-scm.com/docs/gittutorial&quot; target=&quot;_blank&quot;&gt;this tutorial&lt;/a&gt; hosted by Git should have you up and running Git within half an hour or so of reading.&lt;/p&gt;
+
+&lt;p&gt;Let’s make a new branch where we’ll solve the issue. I’ll just name the branch &lt;strong&gt;CRM-18537&lt;/strong&gt; to represent the issue id.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout upstream/master &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; CRM-18537&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;change-the-required-code&quot;&gt;Change the Required Code&lt;/h3&gt;
+
+&lt;p&gt;This is the part where I’ll mostly fast forward and just show you the required changes.&lt;/p&gt;
+&lt;div class=&quot;message&quot;&gt;This is something you have to figure out on your own, you will not find a blog telling you how to fix every bug you face.&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/opentoopen/opentoopen2-1.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We’ll just add this simple SQL query to delete the corresponding field.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/opentoopen/opentoopen2-2.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;
+&lt;img src=&quot;/public/opentoopen/opentoopen2-3.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And delete the corresponding values in these two files. (&lt;a href=&quot;https://wiki.civicrm.org/confluence/display/CRMDOC/Upgrade+Reference&quot; target=&quot;_blank&quot;&gt;How did I know what to do?&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h3 id=&quot;committing-your-changes&quot;&gt;Committing Your Changes&lt;/h3&gt;
+
+&lt;p&gt;Great! You’ve successfully made your first change to the code-base. How to go about converting this into a patch?&lt;/p&gt;
+
+&lt;p&gt;Let’s start by committing your changes and pushing them to your forked repository.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;CRM-18537 Remove Brazilian state.&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push https://github.com/username/civicrm-core.git CRM-18537&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Enter your GitHub username and password and head on over to &lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;On your GitHub dashboard, you’ll find a notification telling you that you pushed some code to a new branch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CRM-18537&lt;/code&gt;. Click on the green create a pull request button, add a brief description, review your changes one last time (not really the last time) and finish up.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/opentoopen/opentoopen2-4.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Congratulations! You have your first PR ready to be merged (or closed)! :grin:&lt;/p&gt;
+
+&lt;p&gt;How to make changes to your PRs, what is testing, rebasing and the wonderful utility called grep. Continued in part 3.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 14 May 2016 00:00:00 +0000</pubDate>
+        <link>https://saurabhbatra96.github.io//2016/05/14/opening-up-to-open-source-part-2/</link>
+        <guid isPermaLink="true">https://saurabhbatra96.github.io//2016/05/14/opening-up-to-open-source-part-2/</guid>
+    <category term="open-source"/><category term="civicrm"/><category term="git"/><category term="github"/><category term="gsoc"/>
+        
+        
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>Opening up to Open Source - Part 1</title>
+        <description>&lt;h3 id=&quot;what-this-series-of-blogs-is-about&quot;&gt;What this series of blogs is about:&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;My experience of volunteering for an open source organization;&lt;/li&gt;
+  &lt;li&gt;Things I wish I knew before I started my open source journey as a student;&lt;/li&gt;
+  &lt;li&gt;Tutorials about how to go about creating your first patch.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;what-this-series-of-blogs-is-not-about&quot;&gt;What this series of blogs is NOT about:&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;A general introduction to the open source world. There already exist definitive and well-written guides out there on the internet concerning the same. If that is what you’re looking for, here is the link to &lt;a href=&quot;https://guides.github.com/activities/contributing-to-open-source/&quot; target=&quot;_blank&quot;&gt;GitHub’s guide on contributing to open source projects&lt;/a&gt; which I found to be particularly short, sweet and to the point;&lt;/li&gt;
+  &lt;li&gt;Unicorns.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-beginning&quot;&gt;The Beginning&lt;/h2&gt;
+
+&lt;p&gt;The toughest part of contributing to open source projects is getting the ball rolling; it’s not easy for a newbie to build software from source and to get accustomed to large and abstracted codebases that accompany.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;I remember how excited I was when I first downloaded the source code for Mozilla Firefox and also how frustrated I was after a couple of hours when I couldn’t even figure out where the code for a simple menu was located (yes I was naive and grepping for stuff was a foreign concept &lt;em&gt;sigh&lt;/em&gt;).&lt;/p&gt;
+
+&lt;div class=&quot;message&quot;&gt;My point being, it's only natural that instead of sprinting, you start your journey stumbling.&lt;/div&gt;
+
+&lt;p&gt;Once you’ve found an organization that catches your interest, start off with joining their &lt;strong&gt;mailing lists and IRC channel&lt;/strong&gt;. However, I’ve noticed that people (including me) have this tendency to try and not make a fool out of themselves on public fora and therefore just prowl IRC rather than ask newbie stuff on it. Moreover, it’s rather not uncommon for people to get replies some 12 hours after they initially posted their question because of timezone differences and not a lot of people stick around for that long.&lt;/p&gt;
+
+&lt;div class=&quot;message&quot;&gt;The most important piece of advice I have is that you find a mentor associated with the organization to email personally.&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;I cannot stress on this point enough.&lt;/strong&gt; You need someone to hold your hand in this initial phase. If you have any doubt on how to build the software, how to deal with an issue/bug, how to rebase the 2945 commits you accidentally inherited when you forgot to change your branch before making the &lt;abbr title=&quot;Pull Request on GitHub&quot;&gt;PR&lt;/abbr&gt;, you email your mentor. If you’re lucky and the people running the organization are helpful, your life will be made extremely easy.&lt;/p&gt;
+
+&lt;div class=&quot;message&quot;&gt;&lt;b&gt;However&lt;/b&gt;, while you may ask for their help from time to time, the most important aspect of this phase is to try to do everything yourself first.&lt;/div&gt;
+
+&lt;p&gt;Google stuff, go through the organization Wikis, read their blogs and forums. &lt;strong&gt;Initiative&lt;/strong&gt; is the key here. Your mentor will only assist if he/she finds your work and willingness to work to be up to his/her expectations.&lt;/p&gt;
+
+&lt;h2 id=&quot;exploring-the-code-base&quot;&gt;Exploring the Code-base&lt;/h2&gt;
+
+&lt;p&gt;I remember the first patch I made was a patch which &lt;em&gt;fixed&lt;/em&gt; the comments for a couple of modules: stuff which did not involve heavy lifting and guaranteed no real harm to the working of the modules.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/opentoopen/opentoopen1.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The beauty of starting with patches such as these is that:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;a)&lt;/strong&gt; you get used to the preferred coding style of your organization, and&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;b)&lt;/strong&gt; you get to explore various classes/modules and their functionalities.&lt;/p&gt;
+
+&lt;p&gt;The added incentive being, you’re improving your organization’s documentation and protecting it from grammatical errors. :wink:&lt;/p&gt;
+
+&lt;p&gt;Head over to &lt;a href=&quot;/2016/05/14/opening-up-to-open-source-part-2/&quot;&gt;part 2&lt;/a&gt; for &lt;strong&gt;writing your first &lt;em&gt;real&lt;/em&gt; patch&lt;/strong&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 12 May 2016 00:00:00 +0000</pubDate>
+        <link>https://saurabhbatra96.github.io//2016/05/12/opening-up-to-open-source-part-1/</link>
+        <guid isPermaLink="true">https://saurabhbatra96.github.io//2016/05/12/opening-up-to-open-source-part-1/</guid>
+    <category term="open-source"/><category term="civicrm"/><category term="git"/><category term="github"/><category term="gsoc"/>
+        
+        
+      </item>
+    
   </channel>
 </rss>
