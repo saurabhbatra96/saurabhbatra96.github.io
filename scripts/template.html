@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saurabh Batra</title>
+  <meta name="description" content="Games, study tools and graphics experiments by Saurabh Batra. Everything here runs in your browser.">
+  <meta property="og:title" content="Saurabh Batra">
+  <meta property="og:description" content="Games, study tools and graphics experiments. Everything here runs in your browser.">
+  <meta property="og:image" content="https://saurabhbatra96.github.io/thumbs/chess-lessons.jpg">
+  <link rel="icon" href="/public/favicon.ico">
+  <link rel="alternate" type="application/atom+xml" title="Old blog (archive)" href="/atom.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f3ee;
+      --surface: #fffdf9;
+      --ink: #1d1b18;
+      --muted: #6b655c;
+      --line: #e3ddd3;
+      --accent: #b4441e;
+      --tag-bg: #efe9df;
+      --shadow: 0 1px 2px rgb(40 30 20 / .06), 0 8px 24px -12px rgb(40 30 20 / .18);
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #141311;
+        --surface: #1d1c19;
+        --ink: #ece7df;
+        --muted: #a39b8f;
+        --line: #33302b;
+        --accent: #f08a5d;
+        --tag-bg: #2a2824;
+        --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 10px 28px -14px rgb(0 0 0 / .6);
+        color-scheme: dark;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #141311; --surface: #1d1c19; --ink: #ece7df; --muted: #a39b8f;
+      --line: #33302b; --accent: #f08a5d; --tag-bg: #2a2824;
+      --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 10px 28px -14px rgb(0 0 0 / .6);
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+    @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+    /* Intro */
+    .intro { padding: 72px 0 40px; }
+    .intro h1 {
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 650;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      margin: 0 0 18px;
+    }
+    .intro p { max-width: 36rem; margin: 0; font-size: 1.125rem; color: var(--muted); }
+    .intro p strong { color: var(--ink); font-weight: 600; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 24px; font-weight: 500; }
+    .links a { text-decoration: none; border-bottom: 1.5px solid var(--line); padding-bottom: 1px; }
+    .links a:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Sections */
+    .group { padding: 28px 0 20px; border-top: 1px solid var(--line); }
+    .group-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin-bottom: 20px; }
+    .group-head h2 {
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 500;
+      font-size: 1.5rem;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+    .group-head p { margin: 0; color: var(--muted); font-size: .95rem; }
+
+    .grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+    @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 960px) {
+      .group-projects .grid, .group-older .grid { grid-template-columns: repeat(3, 1fr); }
+      .group-featured .grid { gap: 28px; }
+    }
+
+    /* Cards */
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover { transform: translateY(-2px); }
+    .card:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .shot { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--tag-bg); }
+    .shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .4s ease; }
+    .card:hover .shot img { transform: scale(1.025); }
+    .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .body h3 { margin: 0; font-size: 1.08rem; font-weight: 600; letter-spacing: -0.005em; }
+    .group-featured .body h3 { font-family: Fraunces, Georgia, serif; font-weight: 650; font-size: 1.4rem; }
+    .body h3 a { text-decoration: none; }
+    .body h3 a::after { content: ""; position: absolute; inset: 0; }   /* whole card is the link */
+    .body h3 a:focus { outline: none; }
+    .body p { margin: 0; color: var(--muted); font-size: .95rem; }
+    .meta { margin-top: auto; padding-top: 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: .78rem; }
+    .year { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 4px; }
+    .tag { background: var(--tag-bg); color: var(--muted); padding: 2px 8px; border-radius: 99px; }
+    .repo {
+      position: relative; z-index: 1;            /* sits above the card-wide link */
+      margin-left: auto; color: var(--muted); text-decoration: none; font-weight: 500;
+    }
+    .repo:hover { color: var(--accent); text-decoration: underline; }
+
+    /* Older work is compact */
+    .group-older .body { padding: 12px 14px 14px; }
+    .group-older .body h3 { font-size: 1rem; }
+    .group-older .body p { font-size: .88rem; }
+
+    footer { border-top: 1px solid var(--line); margin-top: 28px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem; }
+    footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--accent); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card, .shot img { transition: none; }
+      .card:hover { transform: none; }
+      .card:hover .shot img { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="intro">
+      <h1>Saurabh Batra</h1>
+      <p>Things I've built and put on the web: <strong>games, study tools and graphics experiments</strong>. Each one runs in your browser, so click through and try it.</p>
+      <nav class="links" aria-label="Elsewhere">
+        <a href="https://github.com/saurabhbatra96">GitHub</a>
+        <a href="/archive/">Old blog (2016–2018)</a>
+      </nav>
+    </header>
+{{SECTIONS}}
+  </main>
+  <footer>
+    <div class="wrap row">
+      <span>{{COUNT}} projects, all hosted on GitHub Pages.</span>
+      <span><a href="/archive/">Blog archive</a> · <a href="https://github.com/saurabhbatra96">GitHub</a> · © {{YEAR}}</span>
+    </div>
+  </footer>
+</body>
+</html>

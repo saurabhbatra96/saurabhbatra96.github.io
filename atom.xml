@@ -1,28 +1,597 @@
----
-layout: null
----
-
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
- <title>{{ site.title }}</title>
- <link href="{{ site.url }}/atom.xml" rel="self"/>
- <link href="{{ site.url }}/"/>
- <updated>{{ site.time | date_to_xmlschema }}</updated>
- <id>{{ site.url }}</id>
+ <title>Eat a Bit of Pi</title>
+ <link href="https://saurabhbatra96.github.io//atom.xml" rel="self"/>
+ <link href="https://saurabhbatra96.github.io//"/>
+ <updated>2021-05-15T17:10:09+00:00</updated>
+ <id>https://saurabhbatra96.github.io/</id>
  <author>
-   <name>{{ site.author.name }}</name>
-   <email>{{ site.author.email }}</email>
+   <name>Mark Otto</name>
+   <email></email>
  </author>
 
- {% for post in site.posts %}
+ 
  <entry>
-   <title>{{ post.title }}</title>
-   <link href="{{ site.url }}{{ post.url }}"/>
-   <updated>{{ post.date | date_to_xmlschema }}</updated>
-   <id>{{ site.url }}{{ post.id }}</id>
-   <content type="html">{{ post.content | xml_escape }}</content>
+   <title>Catching Fraud at the Wikimedia Foundation</title>
+   <link href="https://saurabhbatra96.github.io//2018/08/15/catching-fraud-at-wikipedia/"/>
+   <updated>2018-08-15T00:00:00+00:00</updated>
+   <id>https://saurabhbatra96.github.io//2018/08/15/catching-fraud-at-wikipedia</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;Disclaimer - a lot of the values quoted below are ball-park figures given to estimate performance and results of this project. They are not to be confused as official Wikimedia Foundation Fundraising data.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;donations-and-fraud-at-wmf&quot;&gt;Donations and fraud at WMF&lt;/h2&gt;
+&lt;p&gt;Thanks to donors all over the globe supporting Wikipedia and her sister sites, the Wikimedia Foundation receives millions of donations in any given year. In the fiscal year 2016-17 WMF raised &lt;a href=&quot;https://foundation.wikimedia.org/wiki/2016-2017_Fundraising_Report&quot; target=&quot;_blank&quot;&gt;$91 million from over 6.1 million donations&lt;/a&gt;! Unfortunately the donations were not bereft of fraudulent transactions - transactions either made using stolen credit card details or made explicitly with the intent to harm WMF by causing monetary loss in the form of chargeback fees.&lt;/p&gt;
+
+&lt;p&gt;Frauds are usually anomalies when it comes to donations, but even assuming that frauds form only 1% of all transactions - that is still 61,000 transactions in the year 16-17. Taking into account that usually chargeback fees range from &lt;a href=&quot;https://www.paypal.com/us/webapps/mpp/merchant-fees#chargeback-fees&quot; target=&quot;_blank&quot;&gt;$15-$20&lt;/a&gt; across various payment gateways, chargeback payments alone would cost WMF $1,220,000!&lt;/p&gt;
+
+&lt;h2 id=&quot;fraud-detection-workflow&quot;&gt;Fraud detection workflow&lt;/h2&gt;
+&lt;p&gt;WMF Fundraising proactively works to make sure that fraudulent transactions are detected before they can be “successful”. The current workflow looks something like this -&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/wmf-fd/fd-workflow.png&quot; style=&quot;display: block; width: 100%;&quot; /&gt;
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;While this approach worked just fine for a few years, statistics show that the performance of filters and Minfraud has continuously degraded over the years - with a lot of heavy lifting being done by donor services instead. Not only does this cost WMF money in the form of merchant refund fee but it also costs us in terms of man-hours spent looking at these transactions.&lt;/p&gt;
+
+&lt;h2 id=&quot;research&quot;&gt;Research&lt;/h2&gt;
+&lt;p&gt;In order to improve WMF’s automatic fraud-detection rates, we started experimenting with machine learning techniques for anomaly detection. After a few weeks of experiments, we decided to go forward and use ensemble techniques like &lt;a href=&quot;https://en.wikipedia.org/wiki/Random_forest&quot; target=&quot;_blank&quot;&gt;random forests&lt;/a&gt; and &lt;a href=&quot;https://en.wikipedia.org/wiki/Gradient_boosting&quot; target=&quot;_blank&quot;&gt;gradient boosting&lt;/a&gt; to classify our transactions as fraud/genuine.&lt;/p&gt;
+
+&lt;p&gt;Both of these techniques involve the use of &lt;a href=&quot;https://en.wikipedia.org/wiki/Decision_tree&quot; target=&quot;_blank&quot;&gt;decision trees&lt;/a&gt;. Decision trees are very easy to visualize and intuitive to understand. Our classifiers make use of an ensemble of them - that is, several such trees are learned by our model by going through the data and the outputs of these are taken into account when making a final decision on how to classify the input.&lt;/p&gt;
+
+&lt;div style=&quot;width: 90%; font-size: 80%; text-align: center;&quot;&gt;&lt;img style=&quot;width: 70%; padding-bottom: 0.5em;&quot; src=&quot;/public/wmf-fd/d-tree.png&quot; /&gt;&lt;br /&gt;A decision tree for my plans this weekend.&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+Our metrics for measuring model performance were twofold - &lt;strong&gt;precision&lt;/strong&gt; and &lt;strong&gt;recall&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Precision in our case refers to “out of all the predictions made by the model, what percentage were actually fraudulent”. Recall refers to “out of all the fraudulent transactions, what percentage were correctly captured by our model”. Concentrating on only one is not enough, a healthy mixture of both is required. For example a model which just checks whether the name field is empty in a donation may be remarkably precise but will not cover a large spectrum of fraudulent transactions.&lt;/p&gt;
+
+&lt;p&gt;Precision and recall can be easily calculated by first calculating the following -&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;True Positives (TP)&lt;/strong&gt; - transactions which were marked fraud by the model and were actually fraud.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;False Positives (FP)&lt;/strong&gt; - transactions which were marked fraud by the model and were actually genuine.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;False Negatives (FN)&lt;/strong&gt; - transactions which were marked genuine by the model and were actually fraud.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Using these, precision and recall come out to be: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Precision = TP / (TP + FP)&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Recall = TP / (TP + FN)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://commons.wikimedia.org/wiki/File:Precisionrecall.svg#/media/File:Precisionrecall.svg&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Precisionrecall.svg/1200px-Precisionrecall.svg.png&quot; alt=&quot;Precisionrecall.svg&quot; style=&quot;display: block; width: 70%;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Ideally we want the values of precision and recall both to be as high as possible, however that is not always possible as an increase in one usually means a decrease in the other. We were able to capture the precision-recall tradeoffs and plot the following curve.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/wmf-fd/gb-tuned.png&quot; style=&quot;display: block; width: 100%;&quot; /&gt;
+&lt;a name=&quot;results-and-comparisions&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;results-and-comparisions&quot;&gt;Results and comparisions&lt;/h2&gt;
+&lt;p&gt;In a comparision of our classifier v/s the filters - we observed that statistically our classifier could’ve caused recall to increase about 50 points in the fiscal year 2017-2018 while maintaining the same 90%+ precision. A whopping 142% increase in the amount of fraud caught before a transaction is marked as complete, all the while maintaining the same percentage of false positives.&lt;/p&gt;
+
+&lt;p&gt;Benefits of the system include:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;could potentially save WMF tens of thousands of dollars in an year in the form of refund/chargeback fees.&lt;/li&gt;
+  &lt;li&gt;does not get out-dated like filters do - our classifiers learn to recognize trends in fraud as they evolve.&lt;/li&gt;
+  &lt;li&gt;easily maintainable - the underlying code and architecture need not be updated for the model to function effectively, we just need to re-train the model and swap it out every few months.&lt;/li&gt;
+  &lt;li&gt;numerous Donor Services man-hours are saved as the classifier only marks 35% of transactions incorrectly (fraud as genuine + genuine as fraud) as compared to our filters.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;proposed-and-current-architecture&quot;&gt;Proposed (and current) architecture&lt;/h2&gt;
+&lt;p&gt;The classifier is to be made available to the WMF transaction flow as an intermediate RESTful web service. A working prototype of the API is ready and available &lt;a href=&quot;&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The API acts as a facade for a running instance of our classifier which effectively serves all requests.&lt;/p&gt;
+
+&lt;p&gt;However, the problem of generating and re-generating the classifier for the API is still semi-solved. Currently, to re-generate the classifier -&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;We run a couple of SQL queries to get our data out as CSVs.&lt;/li&gt;
+  &lt;li&gt;Run a script on the data which pre-processes it for training.&lt;/li&gt;
+  &lt;li&gt;Run another python script which trains our model.&lt;/li&gt;
+  &lt;li&gt;Copy-paste the model into the API folder which uses this as a backend to service its requests.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;All of the above steps are well-documented and are verifiably reproducable using code snippets as detailed in &lt;a href=&quot;https://github.com/saurabhbatra96/wmf-fraud-pipeline/#wmf-fraud-pipeline&quot; target=&quot;_blank&quot;&gt;this repo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This process is to be replaced by a pipeline which automates all these steps, hopefully limiting the need of manual intervention.&lt;/p&gt;
+
+&lt;h2 id=&quot;future-work&quot;&gt;Future work&lt;/h2&gt;
+&lt;p&gt;We are far from finished on this! Not only are we chasing better classifier performance and a fluider architecture; we started off with the lofty goal of making a high-quality, truly open-source credit-card fraud detection system and we intend to make it happen.&lt;/p&gt;
+
+&lt;p&gt;While the indecipherability of the decision making process of machine learning models is considered a con, here it helps in obfuscating the same process from fraudsters - even though they might have the code readily available!&lt;/p&gt;
+
+&lt;p&gt;Currently, we have 3 major tasks on our plate -&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Integrate with WMF transaction workflow. Seeing how our model performs on new data would help us make sure that our approach is “correct” and it works.&lt;/li&gt;
+  &lt;li&gt;Developing a pipeline which automates the task of classifier generation from data.&lt;/li&gt;
+  &lt;li&gt;De-coupling the API and the pipeline from our data schema so that the code can be used and tested by other non-profits/organizations wanting to incorporate this into their in-house fraud detection service.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h2&gt;
+&lt;p&gt;This post and this work wouldn’t have been possible without help and continuous intervention from Adam Wight, Eileen McNaughton and the rest of WMF fr-tech!&lt;/p&gt;
+</content>
  </entry>
- {% endfor %}
+ 
+ <entry>
+   <title>A Human Learning Machine Learning</title>
+   <link href="https://saurabhbatra96.github.io//2017/06/11/human-learning-machine-learning/"/>
+   <updated>2017-06-11T00:00:00+00:00</updated>
+   <id>https://saurabhbatra96.github.io//2017/06/11/human-learning-machine-learning</id>
+   <content type="html">&lt;h2 id=&quot;roll-camera&quot;&gt;Roll Camera&lt;/h2&gt;
+
+&lt;p&gt;I have recently (read: since forever) been swamped by a lot stuff to do (read: procrastinate), which kind of explains (read: serves as a valid excuse) as to why I updated my blog after more than a year.&lt;/p&gt;
+
+&lt;p&gt;Many a projects lie unfinished, collecting dust in my Github as a random tumbleweed rolls past complaining about the lack of documentation and the tardiness of code updates.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Quick, cue cool graphics before you stop reading.&lt;/em&gt; ༼ つ ◕_◕ ༽つ&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/machinelearning/output.gif&quot; style=&quot;display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;tetris&quot;&gt;Tetris&lt;/h2&gt;
+
+&lt;p&gt;Looking at the sparse expanse that my Github has become, I decided to get off my bum and make my computer play some Tetris for me.&lt;/p&gt;
+
+&lt;p&gt;The aim was to just fool around and see how different playing strategies impacted the performance of my bot. The results were, well, pretty much as expected… or not.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Just a disambiguation before I begin, score refers to the score obtained in the game while the objective function is a separate construct.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;artificial-intelligence&quot;&gt;Artificial Intelligence&lt;/h2&gt;
+
+&lt;div class=&quot;message&quot;&gt;Human stupidity beats artificial intelligence every time.&lt;/div&gt;
+
+&lt;p&gt;Starting off, lets see how well does a random bot perform (places blocks at random positions with random rotations applied):&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Average score&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;166&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Number of trials&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6685&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;To compare, here’s the performance statistics for a greedy bot (places blocks such that current score is maximized):&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Average score&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;210&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Number of trials&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Comparable to the random bot, which kind of tells that greed might not be that good after all.&lt;/p&gt;
+
+&lt;p&gt;Moving to a more intuitive strategy: minimize average height of columns at every step, drastically improves these statistics:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Average score&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;726&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Number of trials&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10049&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Tinkering around a little more, I realized that minimizing the aggregate height of each block instead of column height was a better strategy (think about it, it penalizes increased height even more severely):&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Average score&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2423&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Number of trials&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1001&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;em&gt;Drastic improvement!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Hi fives all around!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;However, this is pretty much a very simple bot, whose goal is to optimize an objective function depending on just one factor - minimize aggregate block height; we need to go deeper.&lt;/p&gt;
+
+&lt;p&gt;So, now I decided to make a simple addition to the objective function to reward line clears. Simply put, every time my bot clears a line of tetrominos, it gets +10 brownie points.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Average score&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1382&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Number of trials&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9281&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/machinelearning/mildshock.gif&quot; style=&quot;display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Surely, clearing a line is a good thing, how does awarding that lead to a worse average score? This is where the machine learning aspect comes in.&lt;/p&gt;
+
+&lt;h2 id=&quot;bot-goes-to-school---the-machine-is-finally-learning&quot;&gt;Bot Goes To School - The Machine is Finally Learning&lt;/h2&gt;
+
+&lt;p&gt;When you think of AI, machine learning is a phrase that automatically pops up in your mind; but they are not synonyms. AI can and does produce excellent results without the help of ML simply by considering all possible outcomes and following them through!&lt;/p&gt;
+
+&lt;p&gt;We achieved a perfectly average (it’s tough being average at Tetris, believe me, I tried) bot without using a byte of data to tune our bot.&lt;/p&gt;
+
+&lt;p&gt;However, it is tough to judge according to what objective functions (rules) does the bot play better. Awarding line clears may seem intuitive to you, but maybe the bot is already doing that by rewarding minimum aggregate height!&lt;/p&gt;
+
+&lt;p&gt;Suppose we came up with an objective function of our own:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aggrHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numLineClears&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numHoles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;heightMult&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aggrHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lineMult&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numLineClears&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;holeMult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numHoles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Punish more aggregate height and more number of holes (empty regions which cannot be reduced), reward line clears.&lt;/p&gt;
+
+&lt;p&gt;Now our goal is to find optimum values for the coefficients so that the bot performs better (than what? read on) on average.&lt;/p&gt;
+
+&lt;h3 id=&quot;genetic-programming&quot;&gt;Genetic Programming&lt;/h3&gt;
+
+&lt;p&gt;The paradigm I chose to optimize my objective function is a little something called genetic programming. It behaves a lot like evolution, hence the name.&lt;/p&gt;
+
+&lt;p&gt;Let’s call a triplet of values &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(heightMult, lineMult, holeMult)&lt;/code&gt; a &lt;em&gt;chromosome&lt;/em&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;We start with 16 such chromosomes filled with random values between -10.0 to 10.0.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We randomly select two chromosomes (triplets) and then make them compete in, say, a 100 games of Tetris. The one that performs better is kept while the loser is kept in a separate pile.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;After all such competitions, half of the losers are randomly discarded.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Using the 8 winners that we have with us, we make 4 pairs and ahem, ahem… breed them together. During the breeding process we randomly (with 50-50 odds) select an attribute of one of the parents and keep it over the other parent’s attribute, thus giving us 4 new hybrid chromosomes.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We have our second generation of chromosomes with us (8 winners, 4 losers, 4 hybrids).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We make them compete again and again till the competing chromosomes start achieving better average scores than we want.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Then, we just select one lucky chromosome (just kidding, we select the best chromosome) to use for our bot!&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;message&quot;&gt;This was a rather simplistic explanation of genetic programming, you can do a lot more with it, just Google it!&lt;/div&gt;
+
+&lt;h2 id=&quot;testing-out-the-lucky-chromosome&quot;&gt;Testing Out The Lucky Chromosome&lt;/h2&gt;
+
+&lt;p&gt;So how does the ML backed bot perform? Well, I don’t know because I never ever got around to completing it.&lt;/p&gt;
+
+&lt;p&gt;I did write the boilerplate code for it but never got around to completing it. However, looking at the bright side of things, this does present an opportunity in case anyone wants to take up an introductory ML project (read: somebody please complete my code for me, I don’t have the time).&lt;/p&gt;
+
+&lt;h2 id=&quot;the-code&quot;&gt;The Code&lt;/h2&gt;
+
+&lt;p&gt;You can view the code over at my Github: &lt;a href=&quot;https://github.com/saurabhbatra96/nextgen-tetris&quot; target=&quot;_blank&quot;&gt;NextGen-Tetris&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Or if you want to play around with it, just get it from the Go package manager.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;go get github.com/saurabhbatra96/nextgen-tetris&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Open your bin folder and run the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nextgen-tetris&lt;/code&gt; binary with custom args: &lt;em&gt;height multiplier&lt;/em&gt;, &lt;em&gt;line multiplier&lt;/em&gt; and &lt;em&gt;hole mutiplier&lt;/em&gt;.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./nextgen-tetris &lt;span class=&quot;nt&quot;&gt;-1&lt;/span&gt;.0 5.0 &lt;span class=&quot;nt&quot;&gt;-2&lt;/span&gt;.5&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Go through the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;genetic-prog&lt;/code&gt; directory to have a look at the boilerplate for the genetic algorithm.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tetris-data&lt;/code&gt; directory has the statistics I stated above and the corresponding binaries that I used to compute the same. You can run them for yourself and corroborate my results.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/machinelearning/mleverywhere.jpg&quot; style=&quot;width:100%;display: block;&quot; /&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>drive-sync - The Idea, Application and Node.</title>
+   <link href="https://saurabhbatra96.github.io//2016/06/04/drive-sync-intro/"/>
+   <updated>2016-06-04T00:00:00+00:00</updated>
+   <id>https://saurabhbatra96.github.io//2016/06/04/drive-sync-intro</id>
+   <content type="html">&lt;p&gt;If you’d rather not read the intro and jump to the application directly, visit the &lt;a href=&quot;https://github.com/saurabhbatra96/drive-sync&quot; target=&quot;_blank&quot;&gt;Github page for drive-sync&lt;/a&gt;. Most of the information you’d need is in the README file itself.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-idea&quot;&gt;The Idea&lt;/h2&gt;
+&lt;p&gt;I’ve been using Ubuntu for quite some time now (more than a year) and the thing I love most about it is the flexibility its command line offers to its users. The learning curve might be steep but it pays off to delve into bash.&lt;/p&gt;
+&lt;div class=&quot;message&quot;&gt;
+Inspired by this, I thought: &quot;Wouldn't it be cool if I could access my files on the cloud using a &lt;abbr title=&quot;Command Line Interface&quot;&gt;cli&lt;/abbr&gt;?&quot;
+&lt;/div&gt;
+
+&lt;p&gt;I wanted to develop a CLI application to control my Facebook. However, as it unfortunately turns out, the Facebook API does not expose enough data for me to be able to build the app flexible enough to my liking. What the Facebook API does support fully though, are applications which can predict &lt;em&gt;which celebrity do you look like the most&lt;/em&gt;. :neutral_face:
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;the-application&quot;&gt;The Application&lt;/h2&gt;
+
+&lt;p&gt;If you’re running Linux, you might wanna head on over now to &lt;a href=&quot;https://github.com/saurabhbatra96/drive-sync&quot; target=&quot;_blank&quot;&gt;the drive-sync repository&lt;/a&gt; and follow the instructions in this section.&lt;/p&gt;
+
+&lt;p&gt;Let’s get you set up, it’s really easy. If you do not have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm&lt;/code&gt; set up on your machine, you might want to install them by following the simple tutorial &lt;a href=&quot;https://docs.npmjs.com/getting-started/installing-node&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt; if you don’t have them already.&lt;/p&gt;
+
+&lt;p&gt;Either clone the repository using git or you can use the zipped beta version from &lt;a href=&quot;https://github.com/saurabhbatra96/drive-sync/releases/tag/v1.0-beta&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;. After you have the code stored in a directory navigate to it and use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm link&lt;/code&gt; command to use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;drive-sync&lt;/code&gt; from your terminal.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone https://github.com/saurabhbatra96/drive-sync.git
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;drive-sync
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;npm &lt;span class=&quot;nb&quot;&gt;link&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;drive-sync &lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;When you enter the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;drive-sync pwd&lt;/code&gt; command, you’ll be given a link by Google to navigate to. Open it up in your browser of choice, allow access to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;drive-sync&lt;/code&gt; and copy the code you see there to your terminal (paste using Ctrl+Shift+v FYI). Don’t worry, this is only a one time thing, you will not need to authenticate again!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/drivesync/drive1.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you’re successful, you’ll be notified of some details of your main Google Drive folder. If you’re not, either reach out to me &lt;a href=&quot;https://gitter.im/saurabhbatra96/drive-sync?utm_source=badge&amp;amp;utm_medium=badge&amp;amp;utm_campaign=pr-badge&amp;amp;utm_content=badge&quot;&gt;&lt;img src=&quot;https://badges.gitter.im/saurabhbatra96/drive-sync.svg&quot; alt=&quot;on gitter&quot; /&gt;&lt;/a&gt;, file an &lt;a href=&quot;https://github.com/saurabhbatra96/drive-sync/issues&quot; target=&quot;_blank&quot;&gt;issue on Github&lt;/a&gt; or leave a comment here!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/drivesync/drive2.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now all the commands which you can use are listed on the GitHub repository itself, however I’ll give you a small demo. Let’s say that I want to download all the files in a certain folder called “Drive Sync Test” from my Drive. What’s more, the said folder contains files of different kinds, there are images, pdfs, zipped files and also a Google Doc and a Google Spreadsheet.&lt;/p&gt;
+
+&lt;p&gt;I’ll navigate to the said folder, and then all it takes is one command to do it all!&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;drive-sync &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Drive Sync Test&quot;&lt;/span&gt;
+Directory changed
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;drive-sync down all&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Hey presto! All the files you needed are now downloaded/downloading to the folder you were currently in! What’s more, you’ll notice that the Google Docs have automatically been converted to a format that your PC can read (.doc for Docs and .xls for Sheet).&lt;/p&gt;
+
+&lt;p&gt;But wait a moment, suppose you want the Google Doc in the form of a PDF rather than in Word format. Easy! All you have to do is use the export command!&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;drive-sync &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;testdoc pdf&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now the Google Doc &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;testdoc&lt;/code&gt; will be downloaded in the form of a pdf! To view the complete list of formats supported, head on over to the Github page, it’s all in the &lt;a href=&quot;https://github.com/saurabhbatra96/drive-sync#usage&quot; target=&quot;_blank&quot;&gt;README&lt;/a&gt;!&lt;/p&gt;
+
+&lt;h2 id=&quot;the-learnings-nodejs&quot;&gt;The Learnings: NodeJS&lt;/h2&gt;
+
+&lt;p&gt;I’ll start off with admitting that NodeJS was perhaps not the best of choices for this project. The major reason being, JavaScript in its inherent nature is &lt;strong&gt;asynchronous&lt;/strong&gt; in nature while CLI applications in general wait for user input to occur before processing (duh). JavaScript is perhaps the first &lt;em&gt;dynamic&lt;/em&gt; language that I learned to use, and this is something I did not know until I made drive-sync, so do not feel shy to ask what does it mean?&lt;/p&gt;
+
+&lt;div class=&quot;message&quot;&gt;
+JavaScript in its inherent nature is &lt;b&gt;asynchronous&lt;/b&gt; in nature.
+&lt;/div&gt;
+
+&lt;p&gt;I’ll illustrate the concept of asynchronicity below, but if you’re interested to read more in depth, I found &lt;a href=&quot;https://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/&quot; target=&quot;_blank&quot;&gt;this article&lt;/a&gt; instructive about the basic concepts of functional programming.&lt;/p&gt;
+
+&lt;h3 id=&quot;callbacks&quot;&gt;Callbacks&lt;/h3&gt;
+
+&lt;p&gt;Suppose I have a file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;readme.json&lt;/code&gt; with the following contents:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;dummy&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;value&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now I’ll make a file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test.js&lt;/code&gt; with the following contents. It should be easy to follow what it does by reading the comments.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// test.js&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Let's include the default file system module from the Node library.&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsondata&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;dummy&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;value2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;readme.json&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;jsondata&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jsondata&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dummy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;I know that something looks fishy here, patience though! Running the program gives the output you would expect.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;node test.js
+value&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;I’ll just add another console.log after the readFile method of fs to double check:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// test.js&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Let's include the default file system module from the Node library.&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsondata&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;dummy&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;value2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;readme.json&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;jsondata&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jsondata&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dummy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jsondata&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dummy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The output:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;node test.js
+value2
+value&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;But… But… How is this possible? Nothing makes sense here! Clearly &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsondata.dummy&lt;/code&gt; should be set as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt;? Then why is the output so?&lt;/p&gt;
+
+&lt;div class=&quot;message&quot;&gt;
+The (not so) simple answer lies in the asynchronous nature of JavaScript. JavaScript tends to run in a single thread.
+&lt;/div&gt;
+
+&lt;p&gt;The function which we passed to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fs.readFile&lt;/code&gt;, which sets &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsondata.dummy&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt; is called a &lt;em&gt;callback function&lt;/em&gt;. What it implies is that once &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fs.readFile&lt;/code&gt; returns a marker that the file has been read, this function will be &lt;em&gt;called back&lt;/em&gt;. All this while, the thread is left for other processes, i.e. the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;console.log(jsondata.dummy)&lt;/code&gt; statement at the end. So, in spite of being written after the readFile method, this line returns the old value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsondata&lt;/code&gt; because the function before has not been processed yet!&lt;/p&gt;
+
+&lt;p&gt;Whew! You might want to read that again &lt;strong&gt;or&lt;/strong&gt; you could wait till your head stops spinning when you realize that sequential programming is no more. Kidding.&lt;/p&gt;
+
+&lt;p&gt;There are ways to make such asynchronous functions synchronous. The one which I found easiest to use was the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;deasync&lt;/code&gt; module. More on it later. For now, take &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;drive-sync&lt;/code&gt; out for a spin and leave your feedback and suggestions down below in the comments section.&lt;/p&gt;
+
+&lt;h2 id=&quot;contributing&quot;&gt;Contributing&lt;/h2&gt;
+
+&lt;p&gt;Before I finish off, I’d like to state that I’m more than happy to provide direction if people want to help me add functionality to the project. I already have some ideas I will be working on, and I also listed them in the issues section on the Github repository. Feel free to add more to the list and help me implement them!&lt;/p&gt;
+
+&lt;p&gt;PS: If you want me to do a blog explaining the working code of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;drive-sync&lt;/code&gt; do not forget to leave a comment!&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Sublime Text vs GitHub's Atom</title>
+   <link href="https://saurabhbatra96.github.io//2016/05/16/sublime-text-vs-atom/"/>
+   <updated>2016-05-16T00:00:00+00:00</updated>
+   <id>https://saurabhbatra96.github.io//2016/05/16/sublime-text-vs-atom</id>
+   <content type="html">&lt;p&gt;If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vim&lt;/code&gt; is too basic for you but IDEs feel too slow and sluggish, chances are you probably have been using Sublime Text as your preferred text editor. Now GitHub has an open source editor in town called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Atom&lt;/code&gt; which might give competition to our beloved Sublime.&lt;/p&gt;
+
+&lt;p&gt;I took it out for a spin and used it as my default editor for a week and the following is my honest review of whether I think Atom can stand up to or even overcome the legacy &lt;abbr title=&quot;Sublime Text&quot;&gt;ST&lt;/abbr&gt; has built for itself over the years.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;time&quot;&gt;Time&lt;/h2&gt;
+
+&lt;p&gt;The biggest problem that has plagued Atom has been the issue of how slow it is to load. Given its bloated web-app like back-end, it is unsurprising how bad the load times can sometimes be.&lt;/p&gt;
+
+&lt;div class=&quot;message&quot;&gt;
+  &quot;Atom is a desktop application built with HTML, JavaScript, CSS, and Node.js integration.
+  It runs on Electron, a framework for building cross platform apps using web technologies.&quot;
+  - the folks over at GitHub
+&lt;/div&gt;
+
+&lt;p&gt;I did a test with the Linux utility &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;time&lt;/code&gt; to test how the loading time compares between Atom and ST2 while opening a moderate sized file and a “heavy” file. Please note that both of the files were loaded from the cache.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-rw-rw-r--&lt;/span&gt; 1 saurabh saurabh  48281 May  7 18:15 report.tex
+&lt;span class=&quot;nt&quot;&gt;-rw-rw-r--&lt;/span&gt; 1 saurabh saurabh 1369118 May 16 12:49 civicrm_generated.mysql
+
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;subl report.tex  // ~50 kb file
+
+real	0m0.013s
+user	0m0.009s
+sys	0m0.004s
+
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;atom-beta report.tex
+
+real	0m0.023s
+user	0m0.006s
+sys	0m0.018s
+
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;subl civicrm_generated.mysql  // ~1.5 Mb file
+
+real	0m0.013s
+user	0m0.008s
+sys	0m0.004s
+
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;atom-beta civicrm_generated.mysql
+
+real	0m0.022s
+user	0m0.002s
+sys	0m0.021s&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now, if you’re interested in finding out what these outputs mean, there’s a rather nice StackOverflow answer &lt;a href=&quot;https://stackoverflow.com/questions/556405/what-do-real-user-and-sys-mean-in-the-output-of-time1&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you would rather read the summary, &lt;strong&gt;Real&lt;/strong&gt; is wall clock time - time from start to finish of the call, &lt;strong&gt;User+Sys&lt;/strong&gt; will tell you how much actual CPU time your process used.&lt;/p&gt;
+
+&lt;p&gt;You can see how Sublime beats Atom hands down. On top of this, the Atom GUI takes much more time to load than the Sublime Text one; I could swear there have been times when I waited for more than 5 seconds for Atom to open a file when it was not loading from the cache.&lt;/p&gt;
+
+&lt;h2 id=&quot;hackability&quot;&gt;Hackability&lt;/h2&gt;
+
+&lt;p&gt;Hold on there, I know the time statistics can be off putting and severely favor Sublime Text. However, GitHub has traded time constraints for a good enough reason.&lt;/p&gt;
+
+&lt;p&gt;As mentioned before, Atom is basically a web-app running on Electron. This makes it extremely easy to customize your editor the way you want and is the most exciting aspect of the product. I haven’t done anything useful with it yet, however I did tinker around a bit and totally loved how flexible things are.&lt;/p&gt;
+
+&lt;p&gt;For example, for customizing your theme, all you need is some basic knowledge of CSS. I was running the Solarized: Light theme before the changes.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/atom/atom1.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/atom/atom2.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Also, you can hack into the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;init script&lt;/code&gt;, i.e. the script (written in CoffeeScript BTW) and have custom initializations when the editor starts.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/atom/atom3.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/atom/atom4.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
+
+&lt;p&gt;I could go on and on about how the two text editors vary ever so slightly in other aspects as well, but then &lt;a href=&quot;https://atom.io/packages/unregistered&quot; target=&quot;_blank&quot;&gt;somebody would develop a package and prove me wrong&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To sum it up, I loved how easy it was to experiment with Atom, but, I still love Sublime Text too much to use Atom in my regular coding sessions. The speed more than makes up for the slight lack of hackability.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Opening up to Open Source - Part 2</title>
+   <link href="https://saurabhbatra96.github.io//2016/05/14/opening-up-to-open-source-part-2/"/>
+   <updated>2016-05-14T00:00:00+00:00</updated>
+   <id>https://saurabhbatra96.github.io//2016/05/14/opening-up-to-open-source-part-2</id>
+   <content type="html">&lt;p&gt;I highly recommend that you read &lt;a href=&quot;/2016/05/12/opening-up-to-open-source-part-1/&quot;&gt;part 1&lt;/a&gt; of this series if you haven’t yet.&lt;/p&gt;
+
+&lt;h2 id=&quot;writing-your-first-real-patch&quot;&gt;Writing Your First &lt;em&gt;Real&lt;/em&gt; Patch&lt;/h2&gt;
+
+&lt;p&gt;So let’s get started with how to write a simple patch for your organization. Although keep in mind I’ll be writing this patch for &lt;a href=&quot;http://civicrm.org/&quot;&gt;CiviCRM&lt;/a&gt; and the exact procedure that your organization recommends might differ slightly.&lt;/p&gt;
+
+&lt;h3 id=&quot;finding-a-worthy-issue&quot;&gt;Finding a Worthy Issue&lt;/h3&gt;
+
+&lt;p&gt;One way to go about finding a bug to fix is to prowl their bug trackers, search for issues tagged as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;starter&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;trivial&lt;/code&gt; and comment that you want that issue to be assigned to you. However, most issues tagged &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;trivial&lt;/code&gt; are only &lt;strong&gt;&lt;em&gt;trivial&lt;/em&gt;&lt;/strong&gt; for developers that have considerable experience working with that code-base.&lt;/p&gt;
+
+&lt;p&gt;Instead I’d recommend that you ask your mentor to assign you an issue and provide you with a brief summary of how to go about fixing it.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;what-next&quot;&gt;What Next?&lt;/h3&gt;
+
+&lt;p&gt;Okay, I’ll assume you’ve found a nice issue for yourself. I myself found a rather simple one for this tutorial:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/opentoopen/opentoopen2.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As you can see (or maybe not, but you’ll learn to see) the issue requires us to make a change in a certain table. CiviCRM uses upgrade scripts for this purpose. I Googled “upgrade scripts civicrm” and got &lt;a href=&quot;https://wiki.civicrm.org/confluence/display/CRMDOC/Upgrade+Reference&quot; target=&quot;_blank&quot;&gt;this&lt;/a&gt; result. Have a look through that page if you wish to, or you can &lt;a href=&quot;https://www.psychologytoday.com/blog/close-encounters/201407/can-you-really-trust-the-people-you-meet-online&quot; target=&quot;_blank&quot;&gt;blindly trust my word&lt;/a&gt; that it contains everything we need to solve our issue. :+1:&lt;/p&gt;
+
+&lt;h3 id=&quot;working-with-version-control&quot;&gt;Working With Version Control&lt;/h3&gt;
+
+&lt;p&gt;I’m assuming that you have some basic knowledge of working with version control. If not, &lt;a href=&quot;https://git-scm.com/docs/gittutorial&quot; target=&quot;_blank&quot;&gt;this tutorial&lt;/a&gt; hosted by Git should have you up and running Git within half an hour or so of reading.&lt;/p&gt;
+
+&lt;p&gt;Let’s make a new branch where we’ll solve the issue. I’ll just name the branch &lt;strong&gt;CRM-18537&lt;/strong&gt; to represent the issue id.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout upstream/master &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; CRM-18537&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;change-the-required-code&quot;&gt;Change the Required Code&lt;/h3&gt;
+
+&lt;p&gt;This is the part where I’ll mostly fast forward and just show you the required changes.&lt;/p&gt;
+&lt;div class=&quot;message&quot;&gt;This is something you have to figure out on your own, you will not find a blog telling you how to fix every bug you face.&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/opentoopen/opentoopen2-1.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We’ll just add this simple SQL query to delete the corresponding field.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/opentoopen/opentoopen2-2.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;
+&lt;img src=&quot;/public/opentoopen/opentoopen2-3.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And delete the corresponding values in these two files. (&lt;a href=&quot;https://wiki.civicrm.org/confluence/display/CRMDOC/Upgrade+Reference&quot; target=&quot;_blank&quot;&gt;How did I know what to do?&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h3 id=&quot;committing-your-changes&quot;&gt;Committing Your Changes&lt;/h3&gt;
+
+&lt;p&gt;Great! You’ve successfully made your first change to the code-base. How to go about converting this into a patch?&lt;/p&gt;
+
+&lt;p&gt;Let’s start by committing your changes and pushing them to your forked repository.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;CRM-18537 Remove Brazilian state.&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push https://github.com/username/civicrm-core.git CRM-18537&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Enter your GitHub username and password and head on over to &lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;On your GitHub dashboard, you’ll find a notification telling you that you pushed some code to a new branch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CRM-18537&lt;/code&gt;. Click on the green create a pull request button, add a brief description, review your changes one last time (not really the last time) and finish up.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/opentoopen/opentoopen2-4.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Congratulations! You have your first PR ready to be merged (or closed)! :grin:&lt;/p&gt;
+
+&lt;p&gt;How to make changes to your PRs, what is testing, rebasing and the wonderful utility called grep. Continued in part 3.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Opening up to Open Source - Part 1</title>
+   <link href="https://saurabhbatra96.github.io//2016/05/12/opening-up-to-open-source-part-1/"/>
+   <updated>2016-05-12T00:00:00+00:00</updated>
+   <id>https://saurabhbatra96.github.io//2016/05/12/opening-up-to-open-source-part-1</id>
+   <content type="html">&lt;h3 id=&quot;what-this-series-of-blogs-is-about&quot;&gt;What this series of blogs is about:&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;My experience of volunteering for an open source organization;&lt;/li&gt;
+  &lt;li&gt;Things I wish I knew before I started my open source journey as a student;&lt;/li&gt;
+  &lt;li&gt;Tutorials about how to go about creating your first patch.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;what-this-series-of-blogs-is-not-about&quot;&gt;What this series of blogs is NOT about:&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;A general introduction to the open source world. There already exist definitive and well-written guides out there on the internet concerning the same. If that is what you’re looking for, here is the link to &lt;a href=&quot;https://guides.github.com/activities/contributing-to-open-source/&quot; target=&quot;_blank&quot;&gt;GitHub’s guide on contributing to open source projects&lt;/a&gt; which I found to be particularly short, sweet and to the point;&lt;/li&gt;
+  &lt;li&gt;Unicorns.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-beginning&quot;&gt;The Beginning&lt;/h2&gt;
+
+&lt;p&gt;The toughest part of contributing to open source projects is getting the ball rolling; it’s not easy for a newbie to build software from source and to get accustomed to large and abstracted codebases that accompany.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;I remember how excited I was when I first downloaded the source code for Mozilla Firefox and also how frustrated I was after a couple of hours when I couldn’t even figure out where the code for a simple menu was located (yes I was naive and grepping for stuff was a foreign concept &lt;em&gt;sigh&lt;/em&gt;).&lt;/p&gt;
+
+&lt;div class=&quot;message&quot;&gt;My point being, it's only natural that instead of sprinting, you start your journey stumbling.&lt;/div&gt;
+
+&lt;p&gt;Once you’ve found an organization that catches your interest, start off with joining their &lt;strong&gt;mailing lists and IRC channel&lt;/strong&gt;. However, I’ve noticed that people (including me) have this tendency to try and not make a fool out of themselves on public fora and therefore just prowl IRC rather than ask newbie stuff on it. Moreover, it’s rather not uncommon for people to get replies some 12 hours after they initially posted their question because of timezone differences and not a lot of people stick around for that long.&lt;/p&gt;
+
+&lt;div class=&quot;message&quot;&gt;The most important piece of advice I have is that you find a mentor associated with the organization to email personally.&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;I cannot stress on this point enough.&lt;/strong&gt; You need someone to hold your hand in this initial phase. If you have any doubt on how to build the software, how to deal with an issue/bug, how to rebase the 2945 commits you accidentally inherited when you forgot to change your branch before making the &lt;abbr title=&quot;Pull Request on GitHub&quot;&gt;PR&lt;/abbr&gt;, you email your mentor. If you’re lucky and the people running the organization are helpful, your life will be made extremely easy.&lt;/p&gt;
+
+&lt;div class=&quot;message&quot;&gt;&lt;b&gt;However&lt;/b&gt;, while you may ask for their help from time to time, the most important aspect of this phase is to try to do everything yourself first.&lt;/div&gt;
+
+&lt;p&gt;Google stuff, go through the organization Wikis, read their blogs and forums. &lt;strong&gt;Initiative&lt;/strong&gt; is the key here. Your mentor will only assist if he/she finds your work and willingness to work to be up to his/her expectations.&lt;/p&gt;
+
+&lt;h2 id=&quot;exploring-the-code-base&quot;&gt;Exploring the Code-base&lt;/h2&gt;
+
+&lt;p&gt;I remember the first patch I made was a patch which &lt;em&gt;fixed&lt;/em&gt; the comments for a couple of modules: stuff which did not involve heavy lifting and guaranteed no real harm to the working of the modules.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/opentoopen/opentoopen1.png&quot; style=&quot;width: 100%; display: block;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The beauty of starting with patches such as these is that:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;a)&lt;/strong&gt; you get used to the preferred coding style of your organization, and&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;b)&lt;/strong&gt; you get to explore various classes/modules and their functionalities.&lt;/p&gt;
+
+&lt;p&gt;The added incentive being, you’re improving your organization’s documentation and protecting it from grammatical errors. :wink:&lt;/p&gt;
+
+&lt;p&gt;Head over to &lt;a href=&quot;/2016/05/14/opening-up-to-open-source-part-2/&quot;&gt;part 2&lt;/a&gt; for &lt;strong&gt;writing your first &lt;em&gt;real&lt;/em&gt; patch&lt;/strong&gt;.&lt;/p&gt;
+</content>
+ </entry>
+ 
 
 </feed>

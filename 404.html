@@ -1,10 +1,26 @@
----
-layout: default
-title: "404: Page not found"
-permalink: 404.html
----
-
-<div class="page">
-  <h1 class="page-title">404: Page not found</h1>
-  <p class="lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <a href="{{ site.url }}">Head back home</a> to try finding it again.</p>
-</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found</title>
+  <link rel="icon" href="/public/favicon.ico">
+  <style>
+    :root { --bg: #f6f3ee; --ink: #1d1b18; --muted: #6b655c; --accent: #b4441e; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #141311; --ink: #ece7df; --muted: #a39b8f; --accent: #f08a5d; } }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--bg); color: var(--ink);
+           font: 17px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; padding: 16px; }
+    main { max-width: 30rem; }
+    h1 { font-family: Georgia, serif; font-size: 2rem; margin: 0 0 12px; }
+    p { color: var(--muted); margin: 0 0 8px; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Nothing here</h1>
+    <p>That page doesn't exist, or it moved when this site became a portfolio.</p>
+    <p><a href="/">See all projects</a> or browse the <a href="/archive/">old blog archive</a>.</p>
+  </main>
+</body>
+</html>
