@@ -58,7 +58,7 @@
     @media (min-width: 720px) { .wrap { padding: 0 32px; } }
 
     /* Intro */
-    .intro { padding: 72px 0 40px; }
+    .intro { padding: 72px 0 36px; }
     .intro h1 {
       font-family: Fraunces, Georgia, serif;
       font-weight: 650;
@@ -69,7 +69,7 @@
     }
     .intro p { max-width: 36rem; margin: 0; font-size: 1.125rem; color: var(--muted); }
     .intro p strong { color: var(--ink); font-weight: 600; }
-    .links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 24px; font-weight: 500; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 1.125rem; font-weight: 500; }
     .links a { text-decoration: none; border-bottom: 1.5px solid var(--line); padding-bottom: 1px; }
     .links a:hover { border-color: var(--accent); color: var(--accent); }
 
@@ -88,7 +88,7 @@
     .grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
     @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     @media (min-width: 960px) {
-      .group-projects .grid, .group-older .grid { grid-template-columns: repeat(3, 1fr); }
+      .group-older .grid { grid-template-columns: repeat(3, 1fr); }
       .group-featured .grid { gap: 28px; }
     }
 
@@ -107,28 +107,19 @@
     .card:hover { transform: translateY(-2px); }
     .card:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
     .shot { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--tag-bg); }
-    .shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .4s ease; }
-    .card:hover .shot img { transform: scale(1.025); }
-    .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .shot video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .body { padding: 14px 18px 16px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
     .body h3 { margin: 0; font-size: 1.08rem; font-weight: 600; letter-spacing: -0.005em; }
     .group-featured .body h3 { font-family: Fraunces, Georgia, serif; font-weight: 650; font-size: 1.4rem; }
     .body h3 a { text-decoration: none; }
     .body h3 a::after { content: ""; position: absolute; inset: 0; }   /* whole card is the link */
     .body h3 a:focus { outline: none; }
-    .body p { margin: 0; color: var(--muted); font-size: .95rem; }
-    .meta { margin-top: auto; padding-top: 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: .78rem; }
-    .year { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 4px; }
-    .tag { background: var(--tag-bg); color: var(--muted); padding: 2px 8px; border-radius: 99px; }
     .repo {
       position: relative; z-index: 1;            /* sits above the card-wide link */
-      margin-left: auto; color: var(--muted); text-decoration: none; font-weight: 500;
+      flex: none; color: var(--muted); text-decoration: none; font-weight: 500; font-size: .82rem;
     }
     .repo:hover { color: var(--accent); text-decoration: underline; }
 
-    /* Older work is compact */
-    .group-older .body { padding: 12px 14px 14px; }
-    .group-older .body h3 { font-size: 1rem; }
-    .group-older .body p { font-size: .88rem; }
 
     footer { border-top: 1px solid var(--line); margin-top: 28px; padding: 28px 0 48px; color: var(--muted); font-size: .9rem; }
     footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
@@ -136,9 +127,8 @@
     footer a:hover { color: var(--accent); }
 
     @media (prefers-reduced-motion: reduce) {
-      .card, .shot img { transition: none; }
+      .card { transition: none; }
       .card:hover { transform: none; }
-      .card:hover .shot img { transform: none; }
     }
   </style>
 </head>
@@ -146,10 +136,8 @@
   <main class="wrap">
     <header class="intro">
       <h1>Saurabh Batra</h1>
-      <p>Things I've built and put on the web: <strong>games, study tools and graphics experiments</strong>. Each one runs in your browser, so click through and try it.</p>
       <nav class="links" aria-label="Elsewhere">
         <a href="https://github.com/saurabhbatra96">GitHub</a>
-        <a href="/archive/">Old blog (2016–2018)</a>
       </nav>
     </header>
 
@@ -161,58 +149,38 @@
       <div class="grid">
       <article class="card">
         <a class="shot" href="/chess-lessons/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/chess-lessons.jpg" alt="" width="1280" height="800" decoding="async">
+          <video src="clips/chess-lessons.mp4" poster="thumbs/chess-lessons.jpg" width="960" height="600" muted loop playsinline preload="auto"></video>
         </a>
         <div class="body">
           <h3><a href="/chess-lessons/">The Madras Mate</a></h3>
-          <p>A chess course laid out as a newspaper: short articles and graded puzzles for players rated 1000 to 1500.</p>
-          <div class="meta">
-            <span class="year">2026</span>
-            <span class="tag">learning</span><span class="tag">game</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/chess-lessons">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/chess-lessons">Source</a>
         </div>
       </article>
       <article class="card">
         <a class="shot" href="/graphics-lab/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/graphics-lab.jpg" alt="" width="1280" height="800" decoding="async">
+          <video src="clips/graphics-lab.mp4" poster="thumbs/graphics-lab.jpg" width="960" height="600" muted loop playsinline preload="auto"></video>
         </a>
         <div class="body">
           <h3><a href="/graphics-lab/">Graphics Lab</a></h3>
-          <p>Two raw WebGL2 demos: Skybreak, a 3D flight game, and Umbra, a 2D game lit by real-time global illumination.</p>
-          <div class="meta">
-            <span class="year">2026</span>
-            <span class="tag">graphics</span><span class="tag">game</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/graphics-lab">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/graphics-lab">Source</a>
         </div>
       </article>
       <article class="card">
         <a class="shot" href="/wololoop/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/wololoop.jpg" alt="" width="1280" height="800" decoding="async">
+          <video src="clips/wololoop.mp4" poster="thumbs/wololoop.jpg" width="960" height="600" muted loop playsinline preload="auto"></video>
         </a>
         <div class="body">
           <h3><a href="/wololoop/">Wololoop</a></h3>
-          <p>An Age of Empires themed interview practice pad. Real Python 3 in the browser, ten staged problems, a timer and tests.</p>
-          <div class="meta">
-            <span class="year">2026</span>
-            <span class="tag">tool</span><span class="tag">learning</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/wololoop">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/wololoop">Source</a>
         </div>
       </article>
       <article class="card">
         <a class="shot" href="/dog-game/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/dog-game.jpg" alt="" width="1280" height="800" decoding="async">
+          <video src="clips/dog-game.mp4" poster="thumbs/dog-game.jpg" width="960" height="600" muted loop playsinline preload="auto"></video>
         </a>
         <div class="body">
           <h3><a href="/dog-game/">Dog Game</a></h3>
-          <p>A 2D platformer prototype with a companion dog, made in Godot and exported to the web.</p>
-          <div class="meta">
-            <span class="year">2026</span>
-            <span class="tag">game</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/dog-game">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/dog-game">Source</a>
         </div>
       </article>
       </div>
@@ -226,58 +194,38 @@
       <div class="grid">
       <article class="card">
         <a class="shot" href="/systematic-trading/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/systematic-trading.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async">
+          <video src="clips/systematic-trading.mp4" poster="thumbs/systematic-trading.jpg" width="960" height="600" muted loop playsinline preload="none"></video>
         </a>
         <div class="body">
           <h3><a href="/systematic-trading/">Systematic Trading Field Guide</a></h3>
-          <p>An offline-first study site for systematic trading strategy research.</p>
-          <div class="meta">
-            <span class="year">2026</span>
-            <span class="tag">learning</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/systematic-trading">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/systematic-trading">Source</a>
         </div>
       </article>
       <article class="card">
         <a class="shot" href="/life-in-the-uk/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/life-in-the-uk.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async">
+          <video src="clips/life-in-the-uk.mp4" poster="thumbs/life-in-the-uk.jpg" width="960" height="600" muted loop playsinline preload="none"></video>
         </a>
         <div class="body">
           <h3><a href="/life-in-the-uk/">Life in the UK Study App</a></h3>
-          <p>Chapter summaries and 854 flashcards for the Life in the UK test. Works offline and remembers your progress.</p>
-          <div class="meta">
-            <span class="year">2026</span>
-            <span class="tag">learning</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/life-in-the-uk">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/life-in-the-uk">Source</a>
         </div>
       </article>
       <article class="card">
         <a class="shot" href="/dino-bot/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/dino-bot.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async">
+          <video src="clips/dino-bot.mp4" poster="thumbs/dino-bot.jpg" width="960" height="600" muted loop playsinline preload="none"></video>
         </a>
         <div class="body">
           <h3><a href="/dino-bot/">Dino-Bot AI</a></h3>
-          <p>Neuroevolution teaches a population of dinosaurs to jump cacti, with a lab-themed control panel for watching generations improve.</p>
-          <div class="meta">
-            <span class="year">2025</span>
-            <span class="tag">ai</span><span class="tag">game</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/dino-bot">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/dino-bot">Source</a>
         </div>
       </article>
       <article class="card">
         <a class="shot" href="/nextgen-tetris/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/nextgen-tetris.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async">
+          <video src="clips/nextgen-tetris.mp4" poster="thumbs/nextgen-tetris.jpg" width="960" height="600" muted loop playsinline preload="none"></video>
         </a>
         <div class="body">
           <h3><a href="/nextgen-tetris/">NextGen Tetris</a></h3>
-          <p>A Tetris engine in Go and a bot tuned by a genetic algorithm to play as long as it can.</p>
-          <div class="meta">
-            <span class="year">2025</span>
-            <span class="tag">ai</span><span class="tag">game</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/nextgen-tetris">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/nextgen-tetris">Source</a>
         </div>
       </article>
       </div>
@@ -286,35 +234,25 @@
     <section class="group group-for-others" aria-labelledby="h-for-others">
       <header class="group-head">
         <h2 id="h-for-others">Made for others</h2>
-        <p>Sites and themes built for other people.</p>
+        
       </header>
       <div class="grid">
       <article class="card">
         <a class="shot" href="/the-human-engineer/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/the-human-engineer.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async">
+          <video src="clips/the-human-engineer.mp4" poster="thumbs/the-human-engineer.jpg" width="960" height="600" muted loop playsinline preload="none"></video>
         </a>
         <div class="body">
           <h3><a href="/the-human-engineer/">The Human Quest</a></h3>
-          <p>Website for Professor Uma Batra&#39;s weekly letter, rebuilt as a static site from the original Framer design.</p>
-          <div class="meta">
-            <span class="year">2026</span>
-            <span class="tag">website</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/the-human-engineer">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/the-human-engineer">Source</a>
         </div>
       </article>
       <article class="card">
         <a class="shot" href="/not-your-ai-overlords/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/not-your-ai-overlords.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async">
+          <video src="clips/not-your-ai-overlords.mp4" poster="thumbs/not-your-ai-overlords.jpg" width="960" height="600" muted loop playsinline preload="none"></video>
         </a>
         <div class="body">
           <h3><a href="/not-your-ai-overlords/">Not Your A.I. Overlords</a></h3>
-          <p>A Ghost theme for a tongue-in-cheek research publication, with a static preview for trying out ideas.</p>
-          <div class="meta">
-            <span class="year">2026</span>
-            <span class="tag">website</span><span class="tag">theme</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/not-your-ai-overlords">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/not-your-ai-overlords">Source</a>
         </div>
       </article>
       </div>
@@ -323,49 +261,16 @@
     <section class="group group-older" aria-labelledby="h-older">
       <header class="group-head">
         <h2 id="h-older">Older work</h2>
-        <p>Earlier experiments, kept online.</p>
+        
       </header>
       <div class="grid">
       <article class="card">
         <a class="shot" href="/thekickassrepo/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/thekickassrepo.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async">
+          <video src="clips/thekickassrepo.mp4" poster="thumbs/thekickassrepo.jpg" width="960" height="600" muted loop playsinline preload="none"></video>
         </a>
         <div class="body">
           <h3><a href="/thekickassrepo/">The KickAss Repo</a></h3>
-          <p>A music visualiser built with the Web Audio API and D3. Load a song and watch it move.</p>
-          <div class="meta">
-            <span class="year">2016</span>
-            <span class="tag">graphics</span><span class="tag">audio</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/thekickassrepo">Source</a>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <a class="shot" href="/public/mobile-uv/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/mobile-uv.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async">
-        </a>
-        <div class="body">
-          <h3><a href="/public/mobile-uv/">Mobile UV Purification Calculator</a></h3>
-          <p>Sizes a UV lamp setup for disinfecting a cabinet: dimensions, object position, lamp output and exposure time.</p>
-          <div class="meta">
-            <span class="year">2020</span>
-            <span class="tag">tool</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/saurabhbatra96.github.io/tree/master/public/mobile-uv">Source</a>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <a class="shot" href="/public/air-purification/" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/air-purification.jpg" alt="" width="1280" height="800" loading="lazy" decoding="async">
-        </a>
-        <div class="body">
-          <h3><a href="/public/air-purification/">Vehicular Cabin Air Purification</a></h3>
-          <p>A companion calculator for sizing air purification inside a vehicle cabin.</p>
-          <div class="meta">
-            <span class="year">2020</span>
-            <span class="tag">tool</span>
-            <a class="repo" href="https://github.com/saurabhbatra96/saurabhbatra96.github.io/tree/master/public/air-purification">Source</a>
-          </div>
+          <a class="repo" href="https://github.com/saurabhbatra96/thekickassrepo">Source</a>
         </div>
       </article>
       </div>
@@ -373,9 +278,23 @@
   </main>
   <footer>
     <div class="wrap row">
-      <span>13 projects, all hosted on GitHub Pages.</span>
-      <span><a href="/archive/">Blog archive</a> · <a href="https://github.com/saurabhbatra96">GitHub</a> · © 2026</span>
+      <span><a href="/archive/">Old blog</a></span>
+      <span>© 2026</span>
     </div>
   </footer>
+  <script>
+    // Clips play only while on screen, and not at all for people who prefer reduced motion.
+    (() => {
+      const videos = document.querySelectorAll('.shot video');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) e.target.play().catch(() => {});
+          else e.target.pause();
+        }
+      }, { threshold: 0.25 });
+      videos.forEach((v) => io.observe(v));
+    })();
+  </script>
 </body>
 </html>
