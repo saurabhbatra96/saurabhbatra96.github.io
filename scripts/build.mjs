@@ -12,23 +12,18 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 const SECTIONS = {
   featured: { title: 'Featured', note: '' },
   projects: { title: 'More projects', note: '' },
-  'for-others': { title: 'Made for others', note: 'Sites and themes built for other people.' },
-  older: { title: 'Older work', note: 'Earlier experiments, kept online.' },
+  'for-others': { title: 'Made for others', note: '' },
+  older: { title: 'Older work', note: '' },
 };
 
 const card = (p, { eager = false } = {}) => `
       <article class="card">
         <a class="shot" href="${esc(projectUrl(p))}" aria-hidden="true" tabindex="-1">
-          <img src="thumbs/${esc(p.slug)}.jpg" alt="" width="1280" height="800"${eager ? '' : ' loading="lazy"'} decoding="async">
+          <video src="clips/${esc(p.slug)}.mp4" poster="thumbs/${esc(p.slug)}.jpg" width="960" height="600" muted loop playsinline preload="${eager ? 'auto' : 'none'}"></video>
         </a>
         <div class="body">
           <h3><a href="${esc(projectUrl(p))}">${esc(p.title)}</a></h3>
-          <p>${esc(p.pitch)}</p>
-          <div class="meta">
-            <span class="year">${esc(p.year)}</span>
-            ${p.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}
-            <a class="repo" href="${esc(repoUrl(p))}">Source</a>
-          </div>
+          <a class="repo" href="${esc(repoUrl(p))}">Source</a>
         </div>
       </article>`;
 

@@ -33,6 +33,6 @@ jobs:
           if gh issue list --state open --search "in:title \"$title\"" --json number --jq 'length' | grep -qv '^0$'; then
             echo "An issue is already open."
           else
-            { cat report.txt; echo; echo 'Add an entry to `projects.json`, run `npm run thumbs -- <slug>` and `npm run build`, then commit.'; } > body.md
+            { cat report.txt; echo; echo 'Add an entry to `projects.json`, run `npm run record -- <slug>` and `npm run build`, then commit.'; } > body.md
             gh issue create --title "$title" --body-file body.md
           fi
